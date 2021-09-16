@@ -1,11 +1,12 @@
 import React from "react";
+import PrincipalBillInfoForm from "../components/principal-bill-info-form";
 // import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 class Home extends React.Component{
     render(){
         return(
             <div>
-                <h1>Home</h1>
+                <PrincipalBillInfoForm/>
             </div>
         )
     }
