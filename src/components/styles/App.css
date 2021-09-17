@@ -1,0 +1,13 @@
+:root {
+    --principal-color: #3ab2e0;
+    --principal-color-05: #3ab1e085;
+    --secondary-color: #00a3ed;
+    --third-color: #47C089;
+    --light-color: #fff;
+    --principal-font: "Raleway", sans-serif;
+    --secondary-font: "Quicksand", sans-serif;
+}
+
+body {
+    background-color: #edf2f7;
+}
