@@ -1,0 +1,59 @@
+form {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--light-color);
+    padding: 20px;
+    box-shadow: var(--custom-shadow);
+}
+
+.form-title {
+    font-family: var(--principal-font);
+    font-weight: bold;
+    font-size: 30px;
+}
+
+label {
+    margin-top: 20px;
+    font-family: var(--secondary-font);
+}
+
+input {
+    border: none;
+    padding: 10px;
+    background-color: var(--backgrond-color);
+}
+
+.btn-isla-del-lago {
+    margin-top: 30px;
+    width: 100%;
+    padding: 5px 0;
+    align-self: center;
+    background-image: var(--gradient);
+    color: var(--dark-color);
+    border-radius: 0;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+a {
+    color: var(--light-color);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--dark-color);
+}
+
+.text-container {
+    width: 100%;
+    height: 100%;
+}

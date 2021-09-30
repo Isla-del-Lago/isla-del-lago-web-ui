@@ -1,13 +1,16 @@
 :root {
     --principal-color: #3ab2e0;
-    --principal-color-05: #3ab1e085;
     --secondary-color: #00a3ed;
-    --third-color: #47C089;
+    --third-color: #47c089;
     --light-color: #fff;
+    --dark-color: #000;
+    --backgrond-color: #cde1f3;
+    --gradient: linear-gradient( 90deg, #5aa0fb 23.3%, #3a65eb 84.7%);
     --principal-font: "Raleway", sans-serif;
     --secondary-font: "Quicksand", sans-serif;
+    --custom-shadow: 2.8px 2.8px 2.2px rgba(0, 0, 0, 0.027), 6.7px 6.7px 5.3px rgba(0, 0, 0, 0.038), 12.5px 12.5px 10px rgba(0, 0, 0, 0.043), 22.3px 22.3px 17.9px rgba(0, 0, 0, 0.048), 41.8px 41.8px 33.4px rgba(0, 0, 0, 0.053), 100px 100px 80px rgba(0, 0, 0, 0.07);
 }
 
 body {
-    background-color: #edf2f7;
+    background-color: var(--backgrond-color);
 }
