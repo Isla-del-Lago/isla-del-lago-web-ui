@@ -16,17 +16,14 @@ class AqueductBillInfoForm2 extends React.Component {
         this.button = document.getElementById('aqueduct2BillInfoBtn')
     }
     handleChange = () => {
-        if (this.acueFijoResd.value === '' || this.acueRsdBsc.value === "" || this.acueRsdBscSup.value === '') {
-            this.button.disabled = (true)
-        }
-        else {
-            this.button.disabled = (false)
-        }
+        const isFormNotEmpty = this.acueFijoResd.value === "" || this.acueRsdBsc.value === '' || this.acueRsdBscSup.value === '';
+        isFormNotEmpty ? this.button.disabled = (true) : this.button.disabled = (false)
+        
     };
     submit = () => {
-        let acueFijoResd = parseFloat(this.acueFijoResd.value)
-        let acueRsdBsc = parseFloat(this.acueRsdBsc.value)
-        let acueRsdBscSup = parseFloat(this.acueRsdBscSup.value)
+        const acueFijoResd = parseFloat(this.acueFijoResd.value)
+        const acueRsdBsc = parseFloat(this.acueRsdBsc.value)
+        const acueRsdBscSup = parseFloat(this.acueRsdBscSup.value)
         
         sessionStorage.setItem('acueFijoResd',acueFijoResd);
         sessionStorage.setItem('acueRsdBsc',acueRsdBsc);

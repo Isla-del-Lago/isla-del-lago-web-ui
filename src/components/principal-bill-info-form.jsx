@@ -24,9 +24,9 @@ class PrincipalBillInfoForm extends React.Component {
         this.today = new Date();
 
 
-        var dd = this.today.getDate();
-        var mm = this.today.getMonth() + 1;
-        var yyyy = this.today.getFullYear();
+        let dd = this.today.getDate();
+        let mm = this.today.getMonth() + 1;
+        let yyyy = this.today.getFullYear();
 
         if (dd < 10) {
             dd = '0' + dd;
@@ -61,24 +61,21 @@ class PrincipalBillInfoForm extends React.Component {
             });
             this.endBillingDate.value = ''
         }
-        if (this.startBillingDate.value === "" || this.endBillingDate.value === '' || this.discounts.value === '' || this.cleaning.value === '') {
-            this.button.disabled = (true)
-        }
-        else {
-            this.button.disabled = (false)
-        }
+        const isFormNotEmpty = this.startBillingDate.value === "" || this.endBillingDate.value === '' || this.discounts.value === '' || this.cleaning.value === '';
+        isFormNotEmpty ? this.button.disabled = (true) : this.button.disabled = (false)
+
         this.discountsValue = parseInt(this.discounts.value, 10)
         this.cleaningValue = parseInt(this.cleaning.value, 10)
 
     };
     submit = () => {
 
-        let startBillingDateSplit = this.startBillingDate.value.split('-');
-        let startBillingDateOrdered = startBillingDateSplit[2] + '/' + startBillingDateSplit[1] + '/' + startBillingDateSplit[0]
+        const startBillingDateSplit = this.startBillingDate.value.split('-');
+        const startBillingDateOrdered = startBillingDateSplit[2] + '/' + startBillingDateSplit[1] + '/' + startBillingDateSplit[0]
 
-        let endBillingDateSplit = this.endBillingDate.value.split('-');
-        let endBillingDateOrdered = endBillingDateSplit[2] + '/' + endBillingDateSplit[1] + '/' + endBillingDateSplit[0]
-        let completeDate = startBillingDateOrdered + ' - ' + endBillingDateOrdered
+        const endBillingDateSplit = this.endBillingDate.value.split('-');
+        const endBillingDateOrdered = endBillingDateSplit[2] + '/' + endBillingDateSplit[1] + '/' + endBillingDateSplit[0]
+        const completeDate = startBillingDateOrdered + ' - ' + endBillingDateOrdered
 
         sessionStorage.setItem('billDate', completeDate);
         sessionStorage.setItem('discounts', this.discountsValue)

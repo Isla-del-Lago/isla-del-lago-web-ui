@@ -15,16 +15,13 @@ class AqueductBillInfoForm extends React.Component {
     }
     handleChange = () => {
 
-        if (this.m3RsdBsc.value === "" || this.m3RsdBscSup.value === '') {
-            this.button.disabled = (true)
-        }
-        else {
-            this.button.disabled = (false)
-        }
+        const isFormNotEmpty = this.m3RsdBsc.value === "" || this.m3RsdBscSup.value === '';
+        isFormNotEmpty ? this.button.disabled = (true) : this.button.disabled = (false)
+
     };
     submit = () => {
-        let m3RsdBsc = parseInt(this.m3RsdBsc.value)
-        let m3RsdBscSup = parseInt(this.m3RsdBscSup.value)
+        const m3RsdBsc = parseInt(this.m3RsdBsc.value)
+        const m3RsdBscSup = parseInt(this.m3RsdBscSup.value)
         sessionStorage.setItem('m3RsdBsc', m3RsdBsc);
         sessionStorage.setItem('m3RsdBscSup', m3RsdBscSup);
     }

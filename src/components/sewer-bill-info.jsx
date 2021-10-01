@@ -5,7 +5,7 @@ import swal from 'sweetalert';
 import axios from 'axios';
 
 class SewerBillInfoForm extends React.Component {
-    API;
+    API = 'http://localhost:8080/water/bill';
     alcFijoResd;
     alcRsdBsc;
     alcRsdBscSup;
@@ -14,32 +14,26 @@ class SewerBillInfoForm extends React.Component {
     datos;
 
     componentDidMount() {
-        this.API = 'http://localhost:8080/water/bill'
         this.alcFijoResd = document.getElementById('alcFijoResd')
         this.alcRsdBsc = document.getElementById('alcRsdBsc')
         this.alcRsdBscSup = document.getElementById('alcRsdBscSup')
         this.button = document.getElementById('sewerBillInfoBtn')
     }
     handleChange = () => {
-        if (this.alcFijoResd.value === '' || this.alcRsdBsc.value === "" || this.alcRsdBscSup.value === '') {
-            this.button.disabled = (true)
-        }
-        else {
-            this.button.disabled = (false)
-        }
+        const isFormNotEmpty = this.alcFijoResd.value === "" || this.alcRsdBsc.value === '' || this.alcRsdBscSup.value === '';
+        isFormNotEmpty ? this.button.disabled = (true) : this.button.disabled = (false)
+
     };
     submit = () => {
-        let alcFijoResd = parseFloat(this.alcFijoResd.value)
-        let alcRsdBsc = parseFloat(this.alcRsdBsc.value)
-        let alcRsdBscSup = parseFloat(this.alcRsdBscSup.value)
+        const alcFijoResd = parseFloat(this.alcFijoResd.value)
+        const alcRsdBsc = parseFloat(this.alcRsdBsc.value)
+        const alcRsdBscSup = parseFloat(this.alcRsdBscSup.value)
 
         sessionStorage.setItem('alcFijoResd', alcFijoResd);
         sessionStorage.setItem('alcRsdBsc', alcRsdBsc);
         sessionStorage.setItem('alcRsdBscSup', alcRsdBscSup);
         console.table(sessionStorage)
-
         this.datos = {
-
             billDate: sessionStorage.billDate,
             m3RsdBsc: parseInt(sessionStorage.m3RsdBsc),
             m3RsdBscSup: parseInt(sessionStorage.m3RsdBscSup),
@@ -87,7 +81,7 @@ class SewerBillInfoForm extends React.Component {
                         <label for="alcRsdBscSup">Consumo residencial superior a basico</label>
                         <input required onChange={this.handleChange} type="number" id="alcRsdBscSup" />
                         <button disabled={true} type="button" className="btn-isla-del-lago btn" id="sewerBillInfoBtn">
-                            <Link to='#' id="link" onClick={this.submit}>
+                            <Link to='/consumptions' id="link" onClick={this.submit}>
                                 <div className="text-container">
                                     Terminar
                                 </div>
