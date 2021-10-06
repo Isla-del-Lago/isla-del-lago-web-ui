@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import './styles/forms.css'
 import swal from 'sweetalert';
 import axios from 'axios';
@@ -11,7 +10,6 @@ class SewerBillInfoForm extends React.Component {
     alcRsdBscSup;
     button;
     request;
-    datos;
 
     componentDidMount() {
         this.alcFijoResd = document.getElementById('alcFijoResd')
@@ -33,7 +31,7 @@ class SewerBillInfoForm extends React.Component {
         sessionStorage.setItem('alcRsdBsc', alcRsdBsc);
         sessionStorage.setItem('alcRsdBscSup', alcRsdBscSup);
         console.table(sessionStorage)
-        this.datos = {
+        const datos = {
             billDate: sessionStorage.billDate,
             m3RsdBsc: parseInt(sessionStorage.m3RsdBsc),
             m3RsdBscSup: parseInt(sessionStorage.m3RsdBscSup),
@@ -46,9 +44,8 @@ class SewerBillInfoForm extends React.Component {
             alcRsdBscSup: parseInt(sessionStorage.alcRsdBscSup),
             cleaning: parseInt(sessionStorage.cleaning)
         }
-        console.log(this.datos);
 
-        axios.post(this.API, this.datos)
+        axios.post(this.API, datos)
             .then(function (response) {
                 console.log(response);
                 swal({
@@ -56,7 +53,10 @@ class SewerBillInfoForm extends React.Component {
                     text: "Su factura se registro exitosamente",
                     icon: "success",
                     button: "Continuar",
-                });
+                })
+                    .then(function () {
+                        window.location = "/consumptions";
+                    });
             })
             .catch(function (error) {
                 swal({
@@ -64,7 +64,10 @@ class SewerBillInfoForm extends React.Component {
                     text: "Por favor inténtelo más tarde",
                     icon: "error",
                     button: "Continuar",
-                });
+                })
+                    .then(function () {
+                        window.location = "/";
+                    });
             });
     }
 
@@ -81,11 +84,11 @@ class SewerBillInfoForm extends React.Component {
                         <label for="alcRsdBscSup">Consumo residencial superior a basico</label>
                         <input required onChange={this.handleChange} type="number" id="alcRsdBscSup" />
                         <button disabled={true} type="button" className="btn-isla-del-lago btn" id="sewerBillInfoBtn">
-                            <Link to='/consumptions' id="link" onClick={this.submit}>
+                            <div id="link" onClick={this.submit}>
                                 <div className="text-container">
                                     Terminar
                                 </div>
-                            </Link>
+                            </div>
                         </button>
                     </form>
                 </div>
