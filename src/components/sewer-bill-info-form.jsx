@@ -12,6 +12,7 @@ class SewerBillInfoForm extends React.Component {
     request;
 
     componentDidMount() {
+        console.log(url);
         this.alcFijoResd = document.getElementById('alcFijoResd')
         this.alcRsdBsc = document.getElementById('alcRsdBsc')
         this.alcRsdBscSup = document.getElementById('alcRsdBscSup')
@@ -23,7 +24,7 @@ class SewerBillInfoForm extends React.Component {
 
     };
     submit = () => {
-        const APIUrl = url + '/water/bill'
+        const APIUrl = url.urlApi + '/water/bill'
         const alcFijoResd = parseFloat(this.alcFijoResd.value)
         const alcRsdBsc = parseFloat(this.alcRsdBsc.value)
         const alcRsdBscSup = parseFloat(this.alcRsdBscSup.value)

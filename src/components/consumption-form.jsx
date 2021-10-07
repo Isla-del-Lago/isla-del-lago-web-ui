@@ -46,7 +46,7 @@ class ConsumptionForm extends React.Component {
     };
 
     submit = () => {
-        const APIUrl = url + '/water/consumption'
+        const APIUrl = url.urlApi + '/water/consumption'
         const headers = {
             'X-AccessToken': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e30.sllro1KBjuGXu33HB4IevHnM52fjpTN2HfwH7CI81UE'
         }
