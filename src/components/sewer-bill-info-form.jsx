@@ -2,9 +2,9 @@ import React from 'react'
 import './styles/forms.css'
 import swal from 'sweetalert';
 import axios from 'axios';
+import url from './API';
 
 class SewerBillInfoForm extends React.Component {
-    API = 'http://localhost:8080/water/bill';
     alcFijoResd;
     alcRsdBsc;
     alcRsdBscSup;
@@ -12,6 +12,7 @@ class SewerBillInfoForm extends React.Component {
     request;
 
     componentDidMount() {
+        console.log(url);
         this.alcFijoResd = document.getElementById('alcFijoResd')
         this.alcRsdBsc = document.getElementById('alcRsdBsc')
         this.alcRsdBscSup = document.getElementById('alcRsdBscSup')
@@ -23,6 +24,7 @@ class SewerBillInfoForm extends React.Component {
 
     };
     submit = () => {
+        const APIUrl = url.urlApi + '/water/bill'
         const alcFijoResd = parseFloat(this.alcFijoResd.value)
         const alcRsdBsc = parseFloat(this.alcRsdBsc.value)
         const alcRsdBscSup = parseFloat(this.alcRsdBscSup.value)
@@ -31,6 +33,9 @@ class SewerBillInfoForm extends React.Component {
         sessionStorage.setItem('alcRsdBsc', alcRsdBsc);
         sessionStorage.setItem('alcRsdBscSup', alcRsdBscSup);
         console.table(sessionStorage)
+        const headers = {
+            'X-AccessToken': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e30.sllro1KBjuGXu33HB4IevHnM52fjpTN2HfwH7CI81UE'
+        }
         const datos = {
             billDate: sessionStorage.billDate,
             m3RsdBsc: parseInt(sessionStorage.m3RsdBsc),
@@ -45,7 +50,9 @@ class SewerBillInfoForm extends React.Component {
             cleaning: parseInt(sessionStorage.cleaning)
         }
 
-        axios.post(this.API, datos)
+        axios.post(APIUrl, datos, {
+            headers: headers
+        })
             .then(function (response) {
                 console.log(response);
                 swal({
@@ -55,7 +62,7 @@ class SewerBillInfoForm extends React.Component {
                     button: "Continuar",
                 })
                     .then(function () {
-                        window.location = "/consumptions";
+                        window.location = "/consumption";
                     });
             })
             .catch(function (error) {
