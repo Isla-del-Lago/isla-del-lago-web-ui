@@ -1,0 +1,22 @@
+#chartContainer {
+    height: auto;
+    margin: 10px 0;
+}
+
+table {
+    font-size: 12px;
+}
+
+th {
+    vertical-align: middle;
+}
+
+#total {
+    color: red;
+    font-weight: bold;
+}
+
+.chartContainer {
+    display: flex;
+    margin-bottom: 20px;
+}
