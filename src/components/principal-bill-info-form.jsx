@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import swal from 'sweetalert';
 
 class PrincipalBillInfoForm extends React.Component {
-    // myStorage = window.sessionStorage;
     startBillingDate
     endBillingDate
     discounts
@@ -83,7 +82,7 @@ class PrincipalBillInfoForm extends React.Component {
     }
     render() {
         return (
-            <React.Fragment >
+            <React.Fragment > 
                 <div className="container-fluid">
                     <form className="col-10 offset-1 col-md-6 offset-md-3 col-lg-4 offset-lg-4" >
                         <span className="form-title">Ingrese los datos de su factura</span>
