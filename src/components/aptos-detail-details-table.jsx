@@ -4,30 +4,8 @@ import axios from 'axios';
 import calcUrls from './API';
 
 class AptosDetailTable extends React.Component {
-    discounts;
-    cleaning;
-
-    acueFijoResd;
-    m3RsdBsc;
-    acueRsdBsc;
-    m3RsdBscSup;
-    acueRsdBscSup;
-    alcFijoResd;
-    alcRsdBsc;
-    alcRsdBscSup;
 
     componentDidMount() {
-        this.discounts = document.getElementById('discounts')
-        this.cleaning = document.getElementById('cleaning')
-        this.acueFijoResd = document.getElementById('acueFijoResd')
-        this.m3RsdBsc = document.getElementById('m3RsdBsc')
-        this.acueRsdBsc = document.getElementById('acueRsdBsc')
-        this.m3RsdBscSup = document.getElementById('m3RsdBscSup')
-        this.acueRsdBscSup = document.getElementById('acueRsdBscSup')
-        this.alcFijoResd = document.getElementById('alcFijoResd')
-        this.alcRsdBsc = document.getElementById('alcRsdBsc')
-        this.alcRsdBscSup = document.getElementById('alcRsdBscSup')
-
 
         const APIUrl = calcUrls().waterManager + '/water/bill/bill-date?billDate=13/10/2021 - 14/10/2021'
         const headers = {
@@ -38,18 +16,16 @@ class AptosDetailTable extends React.Component {
         })
             .then(function (response) {
                 console.table(response.data);
-                this.discounts.innerHTML = '$' + response.data.discounts;
-                this.cleaning.innerHTML = '$' + response.data.cleaning;
-                this.m3RsdBsc.innerHTML = response.data.m3RsdBsc + 'm3';
-                this.m3RsdBscSup.innerHTML = response.data.m3RsdBscSup + 'm3';
-                this.acueFijoResd.innerHTML = '$' + response.data.acueFijoResd;
-                this.acueRsdBsc.innerHTML = '$' + response.data.acueRsdBsc;
-                this.acueRsdBscSup.innerHTML = '$' + response.data.acueRsdBscSup;
-                this.alcFijoResd.innerHTML = '$' + response.data.alcFijoResd;
-                this.alcRsdBsc.innerHTML = '$' + response.data.alcRsdBsc;
-                this.alcRsdBscSup.innerHTML = '$' + response.data.alcRsdBscSup;
-
-
+                document.getElementById('discounts').innerHTML = '$' + response.data.discounts;
+                document.getElementById('cleaning').innerHTML = '$' + response.data.cleaning;
+                document.getElementById('acueFijoResd').innerHTML = response.data.m3RsdBsc + 'm3';
+                document.getElementById('m3RsdBsc').innerHTML = response.data.m3RsdBscSup + 'm3';
+                document.getElementById('acueRsdBsc').innerHTML = '$' + response.data.acueFijoResd;
+                document.getElementById('m3RsdBscSup').innerHTML = '$' + response.data.acueRsdBsc;
+                document.getElementById('acueRsdBscSup').innerHTML = '$' + response.data.acueRsdBscSup;
+                document.getElementById('alcFijoResd').innerHTML = '$' + response.data.alcFijoResd;
+                document.getElementById('alcRsdBsc').innerHTML = '$' + response.data.alcRsdBsc;
+                document.getElementById('alcRsdBscSup').innerHTML = '$' + response.data.alcRsdBscSup;
             }.bind(this))
 
             .catch(function (error) {

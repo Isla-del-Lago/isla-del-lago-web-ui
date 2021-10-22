@@ -2,7 +2,6 @@ const webUrls = {
     urlLocal: 'http://localhost:3000',
     urlQa: 'https://isla-del-lago-web-ui-qa.herokuapp.com/',
     urlStg: 'https://isla-del-lago-web-ui-stg.herokuapp.com/'
-    // urlMaster: 'https://isla-del-lago-web-ui-master.herokuapp.com/'
 }
 
 const LOCAL_URLS = {
@@ -14,9 +13,6 @@ const QA_URLS = {
 const STG_URLS = {
     waterManager: 'https://isla-del-lago-water-mngr-stg.herokuapp.com/'
 }
-// const MASTER_URLS = {
-//     waterManager: ''
-// }
 
 const url = document.location.origin
 
@@ -28,8 +24,6 @@ const calcUrls = () => {
             return QA_URLS;
         case webUrls.urlStg:
             return STG_URLS;
-        // case webUrls.urlMaster:
-        //     return MASTER_URLS;
         default:
             console.log(url);
             break;
