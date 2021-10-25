@@ -1,0 +1,70 @@
+@import "./App.css";
+#chartContainer {
+    height: auto;
+    margin: 10px 0;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.chartContainer {
+    display: flex;
+    margin: 10px 0;
+}
+
+table {
+    font-size: 13px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+thead {
+    background-color: var(--principal-color);
+}
+
+tbody {
+    background-color: var(--secondary-color);
+}
+
+thead,
+tbody {
+    color: var(--white);
+}
+
+#total {
+    color: var(--black);
+}
+
+table thead tr th:first-child {
+    border-top-left-radius: 10px;
+}
+
+table thead tr th:last-child {
+    border-top-right-radius: 10px;
+}
+
+table tbody tr:last-child th {
+    border-bottom-left-radius: 10px;
+}
+
+table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
+
+td {
+    text-align: center;
+}
+
+th {
+    vertical-align: middle;
+}
+
+#total {
+    color: var(--black);
+}
+
+.chart,
+table {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--custom-shadow);
+}

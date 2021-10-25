@@ -1,10 +1,13 @@
+@import './App.css';
 form {
+    color: var(--black);
     margin: 20px 0;
     display: flex;
     flex-direction: column;
-    background-color: var(--light-color);
+    background-color: var(--white);
     padding: 20px;
     box-shadow: var(--custom-shadow);
+    border-radius: 15px;
 }
 
 .form-title {
@@ -19,19 +22,23 @@ label {
 }
 
 input {
+    width: 100%;
+    color: var(--white);
+    background-color: var(--principal-color);
     border: none;
+    border-radius: 15px;
     padding: 10px;
-    background-color: var(--backgrond-color);
 }
 
 .btn-isla-del-lago {
     margin-top: 30px;
-    width: 100%;
+    width: 60%;
     padding: 5px 0;
     align-self: center;
     background-image: var(--gradient);
-    color: var(--dark-color);
-    border-radius: 0;
+    color: var(--black);
+    border-radius: 10px;
+    box-shadow: var(--custom-shadow);
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -45,15 +52,17 @@ input[type="number"] {
 }
 
 a {
-    color: var(--light-color);
+    color: var(--black);
     text-decoration: none;
 }
 
 a:hover {
-    color: var(--dark-color);
+    color: var(--white);
 }
 
 .text-container {
+    color: var(--black);
+    text-decoration: none;
     width: 100%;
     height: 100%;
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import './styles/forms.css'
 import swal from 'sweetalert';
 import axios from 'axios';
-import url from './API';
+import calcUrls from './API';
 
 class SewerBillInfoForm extends React.Component {
     alcFijoResd;
@@ -12,7 +12,7 @@ class SewerBillInfoForm extends React.Component {
     request;
 
     componentDidMount() {
-        console.log(url);
+        console.log(calcUrls().waterManager);
         this.alcFijoResd = document.getElementById('alcFijoResd')
         this.alcRsdBsc = document.getElementById('alcRsdBsc')
         this.alcRsdBscSup = document.getElementById('alcRsdBscSup')
@@ -24,7 +24,7 @@ class SewerBillInfoForm extends React.Component {
 
     };
     submit = () => {
-        const APIUrl = url.urlApi + '/water/bill'
+        const APIUrl = calcUrls().waterManager + '/water/bill'
         const alcFijoResd = parseFloat(this.alcFijoResd.value)
         const alcRsdBsc = parseFloat(this.alcRsdBsc.value)
         const alcRsdBscSup = parseFloat(this.alcRsdBscSup.value)

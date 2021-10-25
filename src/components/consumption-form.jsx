@@ -2,7 +2,7 @@ import React from "react";
 import './styles/forms.css'
 import swal from 'sweetalert';
 import axios from 'axios';
-import url from "./API";
+import calcUrls from "./API";
 
 class ConsumptionForm extends React.Component {
     apto201;
@@ -46,7 +46,7 @@ class ConsumptionForm extends React.Component {
     };
 
     submit = () => {
-        const APIUrl = url.urlApi + '/water/consumption'
+        const APIUrl = calcUrls().waterManager + '/water/consumption'
         const headers = {
             'X-AccessToken': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e30.sllro1KBjuGXu33HB4IevHnM52fjpTN2HfwH7CI81UE'
         }
