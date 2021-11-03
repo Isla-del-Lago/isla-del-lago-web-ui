@@ -46,7 +46,8 @@ class ConsumptionForm extends React.Component {
     };
 
     submit = () => {
-        const APIUrl = calcUrls().waterManager + '/water/consumption'
+        const APIConsumptionUrl = calcUrls().waterManager + '/water/consumption'
+        const APIApartmentUrl = calcUrls().waterManager + '/water/apartment?billDate=' + sessionStorage.billDate
         const headers = {
             'X-AccessToken': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e30.sllro1KBjuGXu33HB4IevHnM52fjpTN2HfwH7CI81UE'
         }
@@ -59,12 +60,10 @@ class ConsumptionForm extends React.Component {
                 meterValue: document.getElementById(apartmentName).value,
                 valuePhotoUrl: 'null'
             }
-
-            axios.post(APIUrl, consumptionDetail, {
+            axios.post(APIConsumptionUrl, consumptionDetail, {
                 headers: headers
             })
                 .then(function (response) {
-                    console.log(response);
                     swal({
                         title: "Datos guardados",
                         text: "Sus consumos se registraron exitosamente",
@@ -72,8 +71,12 @@ class ConsumptionForm extends React.Component {
                         button: "Continuar",
                     })
                         .then(function () {
-                            window.location = "/aptos-detail";
-                        });
+                            axios.post(APIApartmentUrl, null, {
+                                headers: headers
+                            }).then(function () {
+                                window.location = "/aptos-detail";
+                            })
+                        })
                 })
                 .catch(function (error) {
                     swal({
@@ -84,20 +87,18 @@ class ConsumptionForm extends React.Component {
                     })
                         .then(function () {
                             window.location = "/consumption";
-                        });
-                });
-
-        });
-
-    }
+                        })
+                })
+        })
+    };
     render() {
         return (
-            <React.Fragment>
+            <React.Fragment >
                 <div className="container-fluid">
                     <form className="col-10 offset-1 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
                         <span className="form-title">Informacion de consúmos por apartamento</span>
                         <label for="apto201">Apartamento 201</label>
-                        <input required onChange={this.handleChange} type="number" id="Apto-201" />
+                        <input required onChange={this.handleChange} type="number" id="Apto-201" autoFocus />
                         <label for="apto202">Apartamento 202</label>
                         <input required onChange={this.handleChange} type="number" id="Apto-202" />
                         <label for="apto301">Apartamento 301</label>
@@ -125,7 +126,7 @@ class ConsumptionForm extends React.Component {
                         </button>
                     </form>
                 </div>
-            </React.Fragment>
+            </React.Fragment >
         )
     }
 }
