@@ -11,21 +11,36 @@ class AptosDetailTable extends React.Component {
         const myParams = window.location.href.replaceAll('%20', ' ').replace('&', '=').split('=');
 
         const APIApartmentDetailUrl = calcUrls().waterManager + '/water/apartment/apt-name/' + myParams[1] + '/bill-date?billDate=' + myParams[3]
+        const APIBillDetailUrl = calcUrls().waterManager + '/water/bill/bill-date?billDate=' + myParams[3]
         const headers = {
             'X-AccessToken': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.e30.sllro1KBjuGXu33HB4IevHnM52fjpTN2HfwH7CI81UE'
         }
+        axios.get(APIBillDetailUrl, {
+            headers: headers
+        })
+            .then(function (response) {
+                document.getElementById('acueFijoResd').innerHTML = '$' + response.data.acueFijoResd;
+                document.getElementById('acueRsdBsc').innerHTML = '$' + response.data.acueRsdBsc;
+                document.getElementById('acueRsdBscSup').innerHTML = '$' + response.data.acueRsdBscSup;
+                document.getElementById('alcFijoResd').innerHTML = '$' + response.data.alcFijoResd;
+                document.getElementById('alcRsdBsc').innerHTML = '$' + response.data.alcRsdBsc;
+                document.getElementById('alcRsdBscSup').innerHTML = '$' + response.data.alcRsdBscSup;
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
         axios.get(APIApartmentDetailUrl, {
             headers: headers
         })
             .then(function (response) {
-                console.log(response.data);
                 document.getElementById('apt-name').innerHTML = response.data.apartmentName + ' -- ' + response.data.billDate;
                 document.getElementById('discount').innerHTML = '$' + response.data.consumptionDetail.discount
                 document.getElementById('cleaning').innerHTML = '$' + response.data.consumptionDetail.cleaning
                 document.getElementById('total').innerHTML = '$' + Math.round(response.data.consumptionDetail.total)
                 document.getElementById('m3ResidentialBasic').innerHTML = Math.round(response.data.consumptionDetail.cubicMetersDetail.m3ResidentialBasic)
+                document.getElementById('m3ResidentialBasic2').innerHTML = Math.round(response.data.consumptionDetail.cubicMetersDetail.m3ResidentialBasic)
                 document.getElementById('m3ResidentialBasicSuperior').innerHTML = Math.round(response.data.consumptionDetail.cubicMetersDetail.m3ResidentialBasicSuperior)
-                // document.getElementById('totalM3Consumed').innerHTML = response.data.consumptionDetail.cubicMetersDetail.totalM3Consumed
+                document.getElementById('m3ResidentialBasicSuperior2').innerHTML = Math.round(response.data.consumptionDetail.cubicMetersDetail.m3ResidentialBasicSuperior)
                 document.getElementById('acueResidentialValue').innerHTML = '$' + Math.round(response.data.consumptionDetail.acueductoDetail.residentialValue)
                 document.getElementById('acueResidentialBasicValue').innerHTML = '$' + Math.round(response.data.consumptionDetail.acueductoDetail.residentialBasicValue)
                 document.getElementById('acueResidentialBasicSuperiorValue').innerHTML = '$' + Math.round(response.data.consumptionDetail.acueductoDetail.residentialBasicSuperiorValue)
@@ -59,39 +74,39 @@ class AptosDetailTable extends React.Component {
                         <tbody>
                             <tr>
                                 <th scope='row'>[Acueducto] Cargo fijo residencial</th>
-                                <td id=''></td>
+                                <td>1</td>
+                                <td id='acueFijoResd'></td>
                                 <td id='acueResidentialValue'></td>
-                                <td></td>
                             </tr>
                             <tr>
                                 <th scope='row'>[Acueducto] Consumo residencial básico</th>
                                 <td id='m3ResidentialBasic'></td>
+                                <td id='acueRsdBsc'></td>
                                 <td id='acueResidentialBasicValue'></td>
-                                <td></td>
                             </tr>
                             <tr>
                                 <th scope='row'>[Acueducto] Consumo residencial superior a básico</th>
                                 <td id='m3ResidentialBasicSuperior'></td>
+                                <td id='acueRsdBscSup'></td>
                                 <td id='acueResidentialBasicSuperiorValue'></td>
-                                <td></td>
                             </tr>
                             <tr>
                                 <th scope='row'>[Alcantarillado] Cargo fijo residencial</th>
-                                <td></td>
+                                <td>1</td>
+                                <td id='alcFijoResd'></td>
                                 <td id='alcResidentialValue'></td>
-                                <td></td>
                             </tr>
                             <tr>
                                 <th scope='row'>[Alcantarillado] Consumo residencial básico</th>
-                                <td></td>
+                                <td id='m3ResidentialBasic2'></td>
+                                <td id='alcRsdBsc'></td>
                                 <td id='alcResidentialBasicValue'></td>
-                                <td></td>
                             </tr>
                             <tr>
                                 <th scope='row'>[Alcantarillado] Consumo residencial superior a básico</th>
-                                <td></td>
+                                <td id='m3ResidentialBasicSuperior2'></td>
+                                <td id='alcRsdBscSup'></td>
                                 <td id='alcResidentialBasicSuperiorValue'></td>
-                                <td></td>
                             </tr>
                             <tr>
                                 <th scope='row'>Total aseo</th>
