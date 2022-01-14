@@ -13,10 +13,10 @@ export default function Register(props) {
                 title='Isla del lago' subtitle='Water Manager'>
                 <Form className="customForm" action="">
                     <div className="customForm--title"> Registro </div>
-                    <Input type='text' placeHolder='Escribe tu nombre' id='userName' />
+                    <Input type='text' placeHolder='Escribe tu nombre' id='userName' required='true' />
                     <Input type='email' placeHolder='Escribe tu correo electronico' id='userEmail' />
                     <Input type='password' placeHolder='Escribe tu contraseña' id='userPassword' />
-                    <Button type='submmit' text='Registrarme' />
+                    <Button type='submit' text='Registrarme' />
                 </Form>
             </Card >
         </React.Fragment >
