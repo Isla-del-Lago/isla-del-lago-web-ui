@@ -1,10 +1,11 @@
 import './App.css';
+import Register from './Pages/Register';
 
 
 function App() {
   return (
     <div className="App">
-      <h1>Access point created</h1>
+      <Register/>
     </div>
   );
 }

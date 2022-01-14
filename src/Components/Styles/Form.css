@@ -1,0 +1,13 @@
+.customForm {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    width: 100%;
+    min-height: 50%;
+    background-color: #fff;
+    border-radius: 20px;
+}
+
+.customForm--title {
+    font-weight: bold;
+}
