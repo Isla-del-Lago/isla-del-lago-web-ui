@@ -1,0 +1,58 @@
+name: code-verify
+on:
+  push:
+    branches:
+      - "feature/*"
+
+env:
+  sonar_project_key: Isla-del-Lago_isla-del-lago-web-ui
+  current_branch: ${GITHUB_REF#refs/heads/}
+  node_version: 14
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.node_version }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests and generate coverage report
+        run: npm test -- --coverage --watchAll=false
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Validate sonar analysis result
+        shell: bash
+        env:
+          PROJECT_KEY: ${{ env.sonar_project_key }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          echo "Analysis on branch ${{ env.current_branch }}"
+          projectStatus=$(curl --location --request GET "https://sonarcloud.io/api/qualitygates/project_status?projectKey=$PROJECT_KEY&branch=${{ env.current_branch }}" --header "Authorization: Bearer $SONAR_TOKEN")
+
+          projectStatusErrorString=*"\"projectStatus\":{\"status\":\"ERROR\""*
+
+          echo "$projectStatus"
+
+          if [[ $projectStatus ==  $projectStatusErrorString ]];
+          then
+              echo "Project status error found"
+              exit 1
+          else
+              echo "Project status error not found"
+          fi
