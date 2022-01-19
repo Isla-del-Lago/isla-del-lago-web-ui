@@ -4,6 +4,10 @@ on:
     branches:
       - "feature/*"
 
+env:
+  sonar_project_key: Isla-del-Lago_isla-del-lago-web-ui
+  current_branch: ${GITHUB_REF#refs/heads/}
+
 jobs:
   build:
     name: Build
@@ -22,11 +26,11 @@ jobs:
       - name: Validate sonar analysis result
         shell: bash
         env:
-          PROJECT_KEY: Isla-del-Lago_isla-del-lago-web-ui
+          PROJECT_KEY: ${{ env.sonar_project_key }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          echo "Analysis on branch ${GITHUB_REF#refs/heads/}"
-          projectStatus=$(curl --location --request GET "https://sonarcloud.io/api/qualitygates/project_status?projectKey=$PROJECT_KEY&branch=${GITHUB_REF#refs/heads/}" --header "Authorization: Bearer $SONAR_TOKEN")
+          echo "Analysis on branch ${{ env.current_branch }}"
+          projectStatus=$(curl --location --request GET "https://sonarcloud.io/api/qualitygates/project_status?projectKey=$PROJECT_KEY&branch=${{ env.current_branch }}" --header "Authorization: Bearer $SONAR_TOKEN")
 
           projectStatusErrorString=*"\"projectStatus\":{\"status\":\"ERROR\""*
 
