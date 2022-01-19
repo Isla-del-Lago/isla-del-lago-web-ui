@@ -23,6 +23,9 @@ jobs:
           node-version: 14
           cache: npm
 
+      - name: Install dependencies
+        run: npm install
+
       - name: Run tests and generate coverage report
         run: npm test -- --coverage --watchAll=false
 
