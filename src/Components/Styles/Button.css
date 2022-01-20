@@ -2,9 +2,23 @@
     width: 90%;
     padding: 10px;
     margin: 20px auto 0;
-    background-color: #005ff9;
+    background-color: #005ff983;
     color: white;
     font-weight: bold;
     border: none;
     border-radius: 10px;
+}
+
+.customButton:hover {
+    cursor: pointer;
+}
+
+.disabled {
+    background-color: #e7f0ff;
+    color: #005ff981;
+}
+
+.enabled {
+    background-color: #005ff9;
+    color: white;
 }
