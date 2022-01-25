@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import Button from '../Components/Button';
 import Card from "../Components/Card";
 import Form from "../Components/Form";
@@ -20,7 +21,7 @@ export default function Register(props) {
             setButtonDisabled(false)
             setButtonState('enabled')
         }
-        if (enteredName.length == 0 || enteredEmail.length == 0 || enteredPassword.length == 0) {
+        if (enteredName.length === 0 || enteredEmail.length === 0 || enteredPassword.length === 0) {
             setButtonDisabled(true)
             setButtonState('disabled')
         }
@@ -39,10 +40,57 @@ export default function Register(props) {
 
     const submitHandler = (event) => {
         event.preventDefault()
-        console.log(`Nombre: ${enteredName}`);
-        console.log(`Correo: ${enteredEmail}`);
-        console.log(`Contraseña: ${enteredPassword}`);
+        fetch(
+            'http://localhost:9000/api/v1/user/create',
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8'
+                },
+                body:
+                    JSON.stringify({
+                        'fullName': enteredName,
+                        'email': enteredEmail,
+                        'password': enteredPassword
+                    })
+            }
+        )
+            .then(response => response.json())
+            .then(response => {
+                console.table({ response });
+                console.log(response);
+                if (response.message === "User created") {
+                    Swal.fire({
+                        title: 'Usuario registrado',
+                        text: 'Te has registrado exitosamente',
+                        icon: 'success',
+                        confirmButtonText: 'Continuar'
+                    })
+                        .then((value) => {
+                            document.location = '/login'
+                        }
+                        )
+
+                }
+                if (response.message !== "User created") {
+                    Swal.fire({
+                        title: 'Ups',
+                        text: response.error,
+                        icon: 'warning',
+                        confirmButtonText: 'Continuar'
+                    })
+                }
+            }
+            )
+            .catch(error =>
+                Swal.fire({
+                    title: 'Error!',
+                    text: error.error,
+                    icon: 'error',
+                    confirmButtonText: 'Continuar'
+                }));
     }
+
     return (
         <React.Fragment>
             <Card
