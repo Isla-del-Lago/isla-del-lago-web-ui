@@ -10,8 +10,7 @@ export default function Login(props) {
     const [enteredPassword, setEnteredPassword] = useState('')
     const [buttonDisabled, setButtonDisabled] = useState(true)
     const [buttonState, setButtonState] = useState('disabled')
-    // const [uuid, setUuid] = useState(null)
-    // const [token, setToken] = useState('disabled')
+    
 
     useEffect(() => {
         if (enteredEmail.length > 0 && enteredPassword.length > 0) {
