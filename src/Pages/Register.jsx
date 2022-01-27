@@ -4,9 +4,9 @@ import Button from '../Components/Button';
 import Card from "../Components/Card";
 import Form from "../Components/Form";
 import Input from '../Components/Input';
-
 import './Styles/Resgister.css'
 
+import utils from '../Components/Utils.json';
 
 export default function Register(props) {
 
@@ -41,11 +41,11 @@ export default function Register(props) {
     const submitHandler = (event) => {
         event.preventDefault()
         fetch(
-            'http://localhost:9000/api/v1/user/create',
+            utils.urlBase + '/user/create',
             {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json;charset=UTF-8'
+                    'Content-Type': utils.headers["Content-Type"]
                 },
                 body:
                     JSON.stringify({
@@ -57,11 +57,9 @@ export default function Register(props) {
         )
             .then(response => response.json())
             .then(response => {
-                console.table({ response });
-                console.log(response);
                 if (response.message === "User created") {
                     Swal.fire({
-                        title: 'Usuario registrado',
+                        title: response.message,
                         text: 'Te has registrado exitosamente',
                         icon: 'success',
                         confirmButtonText: 'Continuar'
@@ -74,9 +72,9 @@ export default function Register(props) {
                 }
                 if (response.message !== "User created") {
                     Swal.fire({
-                        title: 'Ups',
+                        title: response.errorCode,
                         text: response.error,
-                        icon: 'warning',
+                        icon: 'error',
                         confirmButtonText: 'Continuar'
                     })
                 }
@@ -84,7 +82,7 @@ export default function Register(props) {
             )
             .catch(error =>
                 Swal.fire({
-                    title: 'Error!',
+                    title: 'Error!' + error.status,
                     text: error.error,
                     icon: 'error',
                     confirmButtonText: 'Continuar'

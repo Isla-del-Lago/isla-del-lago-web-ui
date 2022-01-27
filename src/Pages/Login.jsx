@@ -5,12 +5,14 @@ import Card from "../Components/Card";
 import Form from "../Components/Form";
 import Input from "../Components/Input";
 
+import utils from '../Components/Utils.json';
+
 export default function Login(props) {
     const [enteredEmail, setEnteredEmail] = useState('')
     const [enteredPassword, setEnteredPassword] = useState('')
     const [buttonDisabled, setButtonDisabled] = useState(true)
     const [buttonState, setButtonState] = useState('disabled')
-    
+
 
     useEffect(() => {
         if (enteredEmail.length > 0 && enteredPassword.length > 0) {
@@ -33,11 +35,11 @@ export default function Login(props) {
 
     const submitHandler = (event) => {
         event.preventDefault()
-        fetch('http://localhost:9000/api/v1/user/login',
+        fetch(utils.urlBase + '/user/login',
             {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json;charset=UTF-8'
+                    'Content-Type': utils.headers["Content-Type"]
                 },
                 body:
                     JSON.stringify({
@@ -50,12 +52,11 @@ export default function Login(props) {
             .then(response => response.json())
             .then(response => {
                 if (response.uuid) {
-                    sessionStorage.setItem('uuid', response.uuid)
-                    sessionStorage.setItem('token', response.token)
+                    sessionStorage.setItem(utils.keys["X-uuid"], response.uuid)
+                    sessionStorage.setItem(utils.keys.Token, response.token)
                     setTimeout(() => {
                         document.location = '/'
-                        
-                    }, 2000);
+                    }, 1000);
                 }
                 if (response.error) {
                     Swal.fire({
@@ -66,6 +67,13 @@ export default function Login(props) {
                     })
                 }
             })
+            .catch(error =>
+                Swal.fire({
+                    title: 'Error!' + error.status,
+                    text: error.error,
+                    icon: 'error',
+                    confirmButtonText: 'Continuar'
+                }));
     }
 
     return (
@@ -76,9 +84,9 @@ export default function Login(props) {
                     <div className="customForm--title"> Iniciar sesion </div>
                     <Input onChange={setEmailHandler} type='email' placeHolder='Escribe tu correo electronico' id='userEmail' required={true} />
                     <Input onChange={setPasswordHandler} type='password' placeHolder='Escribe tu contraseña' id='userPassword' required={true} />
-                    
-                        <Button state={buttonState} type='submit' text='Iniciar Sesion' disabled={buttonDisabled} />
-                    
+
+                    <Button state={buttonState} type='submit' text='Iniciar Sesion' disabled={buttonDisabled} />
+
                 </Form>
             </Card>
         </React.Fragment>
