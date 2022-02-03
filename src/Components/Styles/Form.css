@@ -12,3 +12,9 @@
 .customForm--title {
     font-weight: bold;
 }
+
+@media (min-width: 600px) {
+    .customForm {
+        padding: 80px 20px;
+    }
+}
