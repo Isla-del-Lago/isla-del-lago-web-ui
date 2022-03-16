@@ -81,12 +81,10 @@ export default function Login(props) {
             <Card
                 title='Isla del lago' subtitle='Water Manager'>
                 <Form className="customForm" onSubmit={submitHandler}>
-                    <div className="customForm--title"> Iniciar sesion </div>
+                    <div className="customForm--title">Iniciar sesion</div>
                     <Input onChange={setEmailHandler} type='email' placeHolder='Escribe tu correo electronico' id='userEmail' required={true} />
                     <Input onChange={setPasswordHandler} type='password' placeHolder='Escribe tu contraseña' id='userPassword' required={true} />
-
                     <Button state={buttonState} type='submit' text='Iniciar Sesion' disabled={buttonDisabled} />
-
                 </Form>
             </Card>
         </React.Fragment>
