@@ -11,12 +11,6 @@ export default function Home(props) {
             <Link to='/register'>
                 <button className='customButton'>Register</button>
             </Link>
-
-            {userLoginState && (
-                <Link to='/newConsumption'>
-                    <button className='customButton'>New consumption</button>
-                </Link>
-            )}
         </div>
     );
 }

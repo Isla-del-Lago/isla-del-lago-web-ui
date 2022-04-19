@@ -54,7 +54,6 @@ export default function Login(props) {
                     sessionStorage.setItem(utils.keys["X-uuid"], response.uuid)
                     sessionStorage.setItem(utils.keys.Token, response.token)
                     sessionStorage.setItem(utils.keys.UserLoginStatus, true)
-                    props.onUserLogedin()
                     setTimeout(() => {
                         document.location = '/'
                     }, 2000);
