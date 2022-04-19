@@ -4,6 +4,7 @@ import Login from './Pages/Login';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import React from 'react';
 import Home from './Pages/Home';
+import NewConsumption from './Pages/NewConsumption';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<Home/>} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/newconsumption" element={<NewConsumption />} />
         </Routes>
       </BrowserRouter>
     </div>
