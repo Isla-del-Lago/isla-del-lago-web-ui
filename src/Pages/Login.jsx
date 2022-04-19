@@ -4,7 +4,6 @@ import Button from "../Components/Button";
 import Card from "../Components/Card";
 import Form from "../Components/Form";
 import Input from "../Components/Input";
-
 import utils from '../Components/Utils.json';
 
 export default function Login(props) {
@@ -54,9 +53,11 @@ export default function Login(props) {
                 if (response.uuid) {
                     sessionStorage.setItem(utils.keys["X-uuid"], response.uuid)
                     sessionStorage.setItem(utils.keys.Token, response.token)
+                    sessionStorage.setItem(utils.keys.UserLoginStatus, true)
+                    props.onUserLogedin()
                     setTimeout(() => {
                         document.location = '/'
-                    }, 1000);
+                    }, 2000);
                 }
                 if (response.error) {
                     Swal.fire({

@@ -1,77 +1,90 @@
 import React from 'react';
+import * as ReactDOM from 'react-dom';
 import { fireEvent, getQueriesForElement } from '@testing-library/react';
-import * as ReactDOM from "react-dom"
-import Register from '../Register'
+import Register from '../Register';
 
-describe("rendering components", () => {
-    const root = document.createElement("div")
-    ReactDOM.render(<Register />, root)
-    test("Rendering Register Card", () => {
-        const { getByText, getByPlaceholderText } = getQueriesForElement(root)
 
-        const cardTitle = getByText("Isla del lago")
-        const cardSubtitle = getByText("Water Manager")
-        const formTitle = getByText("Registro")
-        const nameInput = getByPlaceholderText('Escribe tu nombre')
-        const emailInput = getByPlaceholderText('Escribe tu correo electronico')
-        const passwordInput = getByPlaceholderText('Escribe tu contraseña')
-        const formButton = getByText("Registrarme")
+var cardTitle;
+var cardSubtitle;
+var formTitle;
+var nameInput;
+var emailInput;
+var passwordInput;
+var formButton;
 
-        expect(cardTitle.className).toBe('customCard__titleContainer--title')
-        expect(cardTitle.className).not.toBe('titleContainer--title')
+describe('rendering components', () => {
+    const root = document.createElement('div');
+    ReactDOM.render(<Register />, root);
 
-        expect(cardSubtitle.className).toBe('customCard__titleContainer--subtitle')
-        expect(cardSubtitle.className).not.toBe('titleContainer--subtitle')
+    test('Rendering Register Card', () => {
+        const { getByText, getByPlaceholderText } = getQueriesForElement(root);
 
-        expect(formTitle.className).toBe('customForm--title')
-        expect(formTitle.className).not.toBe('title')
+        cardTitle = getByText('Isla del lago');
+        cardSubtitle = getByText('Water Manager');
+        formTitle = getByText('Registro');
+        nameInput = getByPlaceholderText('Escribe tu nombre');
+        emailInput = getByPlaceholderText('Escribe tu correo electronico');
+        passwordInput = getByPlaceholderText('Escribe tu contraseña');
+        formButton = getByText('Registrarme');
 
-        expect(nameInput.type).toBe('text')
-        expect(nameInput.type).not.toBe('password')
+        expect(cardTitle.className).toBe('customCard__titleContainer--title');
+        expect(cardTitle.className).not.toBe('titleContainer--title');
 
-        expect(emailInput.type).toBe('email')
-        expect(emailInput.type).not.toBe('password')
+        expect(cardSubtitle.className).toBe(
+            'customCard__titleContainer--subtitle'
+        );
+        expect(cardSubtitle.className).not.toBe('titleContainer--subtitle');
 
-        expect(passwordInput.type).toBe('password')
-        expect(passwordInput.type).not.toBe('email')
+        expect(formTitle.className).toBe('customForm--title');
+        expect(formTitle.className).not.toBe('title');
 
-        expect(formButton.className).toBe('customButton disabled')
-        expect(formButton.className).not.toBe('disabled')
+        expect(nameInput.type).toBe('text');
+        expect(nameInput.type).not.toBe('password');
 
-        fireEvent.change(nameInput, { target: { value: 'Bruce Wayne' } })
-        fireEvent.change(emailInput, { target: { value: '' } })
-        fireEvent.change(passwordInput, { target: { value: '' } })
-        expect(formButton.className).toBe('customButton disabled')
+        expect(emailInput.type).toBe('email');
+        expect(emailInput.type).not.toBe('password');
 
-        fireEvent.change(nameInput, { target: { value: 'Bruce Wayne' } })
-        fireEvent.change(emailInput, { target: { value: 'bruce@wayne.com' } })
-        fireEvent.change(passwordInput, { target: { value: '' } })
-        expect(formButton.className).toBe('customButton disabled')
+        expect(passwordInput.type).toBe('password');
+        expect(passwordInput.type).not.toBe('email');
 
-        fireEvent.change(nameInput, { target: { value: 'Bruce Wayne' } })
-        fireEvent.change(emailInput, { target: { value: '' } })
-        fireEvent.change(passwordInput, { target: { value: 'batman' } })
-        expect(formButton.className).toBe('customButton disabled')
+        expect(formButton.className).toBe('customButton disabled');
+        expect(formButton.className).not.toBe('disabled');
 
-        fireEvent.change(nameInput, { target: { value: '' } })
-        fireEvent.change(emailInput, { target: { value: 'bruce@wayne.com' } })
-        fireEvent.change(passwordInput, { target: { value: '' } })
-        expect(formButton.className).toBe('customButton disabled')
+        fireEvent.change(nameInput, { target: { value: 'Bruce Wayne' } });
+        fireEvent.change(emailInput, { target: { value: '' } });
+        fireEvent.change(passwordInput, { target: { value: '' } });
+        expect(formButton.className).toBe('customButton disabled');
 
-        fireEvent.change(nameInput, { target: { value: '' } })
-        fireEvent.change(emailInput, { target: { value: 'bruce@wayne.com' } })
-        fireEvent.change(passwordInput, { target: { value: 'baman' } })
-        expect(formButton.className).toBe('customButton disabled')
+        fireEvent.change(nameInput, { target: { value: 'Bruce Wayne' } });
+        fireEvent.change(emailInput, { target: { value: 'bruce@wayne.com' } });
+        fireEvent.change(passwordInput, { target: { value: '' } });
+        expect(formButton.className).toBe('customButton disabled');
 
-        fireEvent.change(nameInput, { target: { value: '' } })
-        fireEvent.change(emailInput, { target: { value: '' } })
-        fireEvent.change(passwordInput, { target: { value: 'batman' } })
-        expect(formButton.className).toBe('customButton disabled')
+        fireEvent.change(nameInput, { target: { value: 'Bruce Wayne' } });
+        fireEvent.change(emailInput, { target: { value: '' } });
+        fireEvent.change(passwordInput, { target: { value: 'batman' } });
+        expect(formButton.className).toBe('customButton disabled');
 
-        fireEvent.change(nameInput, { target: { value: 'Bruce Wayne' } })
-        fireEvent.change(emailInput, { target: { value: 'bruce@wayne.com' } })
-        fireEvent.change(passwordInput, { target: { value: 'batman' } })
-        expect(formButton.className).toBe('customButton enabled')
-        fireEvent.click(formButton)
-    })
+        fireEvent.change(nameInput, { target: { value: '' } });
+        fireEvent.change(emailInput, { target: { value: 'bruce@wayne.com' } });
+        fireEvent.change(passwordInput, { target: { value: '' } });
+        expect(formButton.className).toBe('customButton disabled');
+
+        fireEvent.change(nameInput, { target: { value: '' } });
+        fireEvent.change(emailInput, { target: { value: 'bruce@wayne.com' } });
+        fireEvent.change(passwordInput, { target: { value: 'baman' } });
+        expect(formButton.className).toBe('customButton disabled');
+
+        fireEvent.change(nameInput, { target: { value: '' } });
+        fireEvent.change(emailInput, { target: { value: '' } });
+        fireEvent.change(passwordInput, { target: { value: 'batman' } });
+        expect(formButton.className).toBe('customButton disabled');
+
+        fireEvent.change(nameInput, { target: { value: 'Bruce Wayne' } });
+        fireEvent.change(emailInput, { target: { value: 'bruce@wayne.com' } });
+        fireEvent.change(passwordInput, { target: { value: 'batman' } });
+        expect(formButton.className).toBe('customButton enabled');
+        expect(formButton.disabled).toBe(false);
+        fireEvent.click(formButton);
+    });
 });
