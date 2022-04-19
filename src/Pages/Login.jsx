@@ -4,7 +4,6 @@ import Button from "../Components/Button";
 import Card from "../Components/Card";
 import Form from "../Components/Form";
 import Input from "../Components/Input";
-
 import utils from '../Components/Utils.json';
 
 export default function Login(props) {
@@ -54,9 +53,10 @@ export default function Login(props) {
                 if (response.uuid) {
                     sessionStorage.setItem(utils.keys["X-uuid"], response.uuid)
                     sessionStorage.setItem(utils.keys.Token, response.token)
+                    sessionStorage.setItem(utils.keys.UserLoginStatus, true)
                     setTimeout(() => {
                         document.location = '/'
-                    }, 1000);
+                    }, 2000);
                 }
                 if (response.error) {
                     Swal.fire({
@@ -81,12 +81,10 @@ export default function Login(props) {
             <Card
                 title='Isla del lago' subtitle='Water Manager'>
                 <Form className="customForm" onSubmit={submitHandler}>
-                    <div className="customForm--title"> Iniciar sesion </div>
+                    <div className="customForm--title">Iniciar sesion</div>
                     <Input onChange={setEmailHandler} type='email' placeHolder='Escribe tu correo electronico' id='userEmail' required={true} />
                     <Input onChange={setPasswordHandler} type='password' placeHolder='Escribe tu contraseña' id='userPassword' required={true} />
-
                     <Button state={buttonState} type='submit' text='Iniciar Sesion' disabled={buttonDisabled} />
-
                 </Form>
             </Card>
         </React.Fragment>
