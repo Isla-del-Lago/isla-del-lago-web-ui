@@ -1,3 +1,7 @@
+.formsContainer .customForm {
+    height: 100%;
+}
+
 .customForm {
     display: flex;
     flex-direction: column;
@@ -11,6 +15,13 @@
 
 .customForm--title {
     font-weight: bold;
+    font-size: 25px;
+}
+
+.backButton {
+    font-size: 30px;
+    align-self: flex-end;
+    cursor: pointer;
 }
 
 @media (min-width: 600px) {

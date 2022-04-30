@@ -1,0 +1,14 @@
+.home {
+    margin: 0 auto;
+    width: 80vw;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar {
+    font-weight: bold;
+}
+
+
+/* .home .customButton {} */
