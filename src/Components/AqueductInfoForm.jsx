@@ -82,7 +82,7 @@ export default function AqueductInfoForm(props) {
             <Input
                 onChange={setacue_rsd_bscHandler}
                 type='number'
-                placeHolder='Consumo residencial basico'
+                placeHolder='Consumo residencial básico'
                 id='userPassword'
                 required={true}
                 maxDate={maxDate}
@@ -90,7 +90,7 @@ export default function AqueductInfoForm(props) {
             <Input
                 onChange={setacue_rsd_bsc_supHandler}
                 type='number'
-                placeHolder='Consumo residencial superior a basico'
+                placeHolder='Consumo residencial superior a básico'
                 id='userPassword'
                 required={true}
             />

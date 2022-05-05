@@ -21,17 +21,17 @@ export default function Layout(props) {
                 </div>
                 { !userLoginState && (
                     <Link to='/login'>
-                        <button className='customButton'>Login</button>
+                        <button className='customButton'>Iniciar sesión</button>
                     </Link>
                 )}
                 {!userLoginState && (
                     <Link to='/register'>
-                        <button className='customButton'>Register</button>
+                        <button className='customButton'>Registarse</button>
                     </Link>
                 )}
                 {userLoginState && (
                 <button className='customButton' onClick={logoutHandler}>
-                    Logout
+                    Cerrar sesión
                 </button>
             )}
             </nav>

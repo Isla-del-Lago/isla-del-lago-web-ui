@@ -6,8 +6,8 @@ export default function Home(props) {
     return (
         <div className='home'>
             {userLoginState && (
-                <Link to='/newconsumption'>
-                    <button className='customButton'>NEW CONSUMPTION</button>
+                <Link to='/create-bill'>
+                    <button className='customButton'>Nueva factura</button>
                 </Link>
             )}
         </div>

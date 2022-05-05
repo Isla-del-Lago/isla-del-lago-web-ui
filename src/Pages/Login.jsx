@@ -82,21 +82,21 @@ export default function Login(props) {
                         onChange={setEmailHandler}
                         autoFocus={true}
                         type='email'
-                        placeHolder='Escribe tu correo electronico'
+                        placeHolder='Escriba su correo electrónico'
                         id='userEmail'
                         required={true}
                     />
                     <Input
                         onChange={setPasswordHandler}
                         type='password'
-                        placeHolder='Escribe tu contraseña'
+                        placeHolder='Escriba su contraseña'
                         id='userPassword'
                         required={true}
                     />
                     <Button
                         state={buttonState}
                         type='submit'
-                        text='Iniciar Sesion'
+                        text='Iniciar sesion'
                         disabled={buttonDisabled}
                     />
                 </Form>

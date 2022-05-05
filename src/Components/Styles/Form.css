@@ -20,6 +20,8 @@
 
 .backButton {
     font-size: 30px;
+    width: 40px;
+    height: 40px;
     align-self: flex-end;
     cursor: pointer;
 }

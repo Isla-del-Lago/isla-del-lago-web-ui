@@ -30,7 +30,7 @@ function App() {
                         <Route path='/register' element={<Register />} />
                         <Route path='/login' element={<Login />} />
                         <Route
-                            path='/newconsumption'
+                            path='/create-bill'
                             element={
                                 <NewConsumption
                                     userLoginState={userLoginState}

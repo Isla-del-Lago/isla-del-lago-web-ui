@@ -2,7 +2,7 @@ import React from 'react';
 import './Styles/Input.css';
 
 export default function DateInput(props) {
-    const { type, label, id, required, onChange, maxDate, autoFocus } = props;
+    const { type, label, id, required, onChange, maxDate, minDate, autoFocus } = props;
 
     return (
         <React.Fragment>
@@ -16,6 +16,7 @@ export default function DateInput(props) {
                 id={id}
                 required={required}
                 max={maxDate}
+                min={minDate}
                 autoFocus={autoFocus}
             />
         </React.Fragment>

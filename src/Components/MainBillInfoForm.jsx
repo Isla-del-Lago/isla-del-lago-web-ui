@@ -7,6 +7,8 @@ export default function MainBillInfoForm(props) {
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [buttonState, setButtonState] = useState('disabled');
 
+    const [enteredMinDate, setEnteredMinDate] = useState('');
+
     const [enteredStartDate, setEnteredStartDate] = useState('');
     const [enteredEndDate, setEnteredEndDate] = useState('');
     const [enteredDiscounts, setEnteredDiscounts] = useState('');
@@ -51,6 +53,7 @@ export default function MainBillInfoForm(props) {
             parseInt(today.getDate());
     }
     const setStartDateHandler = (event) => {
+        setEnteredMinDate(event.target.value);
         setEnteredStartDate(event.target.value + 'T00:00:01');
     };
     const setEndDateHandler = (event) => {
@@ -90,6 +93,7 @@ export default function MainBillInfoForm(props) {
                 label='Fin periodo de facturación'
                 required={true}
                 maxDate={maxDate}
+                minDate={enteredMinDate}
             />
             <Input
                 onChange={setDiscountsHandler}

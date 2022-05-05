@@ -74,7 +74,7 @@ export default function NewConsumption(props) {
                         icon: 'error',
                         confirmButtonText: 'Continuar',
                     }).then(() => {
-                        document.location = '/newconsumption';
+                        document.location = '/create-bill';
                     });
                 }
                 console.log(response.billId);
@@ -83,9 +83,11 @@ export default function NewConsumption(props) {
     return (
         <React.Fragment>
             {!userLoginState && (
-                <Link to='/login'>
-                    <button className='customButton'>Login</button>
-                </Link>
+                <div className='home'>
+                    <Link to='/login'>
+                        <button className='customButton'>Iniciar sesión</button>
+                    </Link>
+                </div>
             )}
             {userLoginState && (
                 <>

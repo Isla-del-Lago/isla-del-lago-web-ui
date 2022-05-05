@@ -28,7 +28,7 @@ Form .customButton {
 }
 
 .navbar .customButton {
-    width: 80px;
+    width: auto;
     margin-right: 10px;
     color: #000;
     background-color: white;

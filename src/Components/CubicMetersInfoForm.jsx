@@ -67,7 +67,7 @@ export default function CubicMetersInfoForm(props) {
             <Input
                 onChange={setm3_rsd_bscHandler}
                 type='number'
-                placeHolder='Consumo residencial Basico'
+                placeHolder='Consumo residencial básico'
                 id='userEmail'
                 required={true}
                 maxDate={maxDate}
@@ -75,7 +75,7 @@ export default function CubicMetersInfoForm(props) {
             <Input
                 onChange={setm3_rsd_bsc_supHandler}
                 type='number'
-                placeHolder='Consumo residencial superior a Basico'
+                placeHolder='Consumo residencial superior a básico'
                 id='userPassword'
                 required={true}
                 maxDate={maxDate}
