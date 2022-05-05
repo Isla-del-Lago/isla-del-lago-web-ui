@@ -72,7 +72,7 @@ export default function Register(props) {
                         text: 'Te has registrado exitosamente',
                         icon: 'success',
                         confirmButtonText: 'Continuar',
-                    }).then((value) => {
+                    }).then(() => {
                         document.location = '/login';
                     });
                 }

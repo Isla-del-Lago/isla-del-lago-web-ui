@@ -68,7 +68,6 @@ export default function AqueductInfoForm(props) {
     return (
         <Form className='customForm' onSubmit={submitHandler}>
             <span className='backButton' onClick={backButton}>
-                <ion-icon name='caret-back-outline'></ion-icon>
             </span>
             <div className='customForm--title'>Acueducto $</div>
             <Input

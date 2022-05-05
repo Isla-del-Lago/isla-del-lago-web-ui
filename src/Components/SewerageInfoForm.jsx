@@ -68,7 +68,6 @@ export default function SewerageInfoForm(props) {
     return (
         <Form className='customForm' onSubmit={submitHandler}>
             <span className='backButton' onClick={backButton}>
-                <ion-icon name='caret-back-outline'></ion-icon>
             </span>
             <div className='customForm--title'>Alcantarillado $</div>
             <Input

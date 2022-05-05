@@ -10,17 +10,11 @@ export default function CubicMetersInfoForm(props) {
     const [m3_rsd_bsc_sup, setm3_rsd_bsc_sup] = useState('');
 
     useEffect(() => {
-        if (
-            m3_rsd_bsc.length > 0 &&
-            m3_rsd_bsc_sup.length > 0 
-        ) {
+        if (m3_rsd_bsc.length > 0 && m3_rsd_bsc_sup.length > 0) {
             setButtonDisabled(false);
             setButtonState('enabled');
         }
-        if (
-            m3_rsd_bsc.length === 0 ||
-            m3_rsd_bsc_sup.length === 0 
-        ) {
+        if (m3_rsd_bsc.length === 0 || m3_rsd_bsc_sup.length === 0) {
             setButtonDisabled(true);
             setButtonState('disabled');
         }
@@ -53,16 +47,14 @@ export default function CubicMetersInfoForm(props) {
         event.preventDefault();
         sessionStorage.setItem('m3_rsd_bsc', m3_rsd_bsc);
         sessionStorage.setItem('m3_rsd_bsc_sup', m3_rsd_bsc_sup);
-        props.onFormComplete()
+        props.onFormComplete();
     };
     const backButton = () => {
-        props.onBackButton()
+        props.onBackButton();
     };
     return (
         <Form className='customForm' onSubmit={submitHandler}>
-            <span className='backButton' onClick={backButton}>
-                <ion-icon name='caret-back-outline'></ion-icon>
-            </span>
+            <span className='backButton' onClick={backButton}></span>
             <div className='customForm--title'>Consumos m3</div>
             <Input
                 onChange={setm3_rsd_bscHandler}

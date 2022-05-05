@@ -12,7 +12,6 @@ export default function NewConsumption(props) {
     const [formConsumptionStep, setFormConsumptionStep] = useState(1);
     const formSectionCompleteHandler = () => {
         setFormConsumptionStep(formConsumptionStep + 1);
-        console.table(sessionStorage);
     };
     const onBackButtonHandler = () => {
         setFormConsumptionStep(formConsumptionStep - 1);
@@ -77,7 +76,6 @@ export default function NewConsumption(props) {
                         document.location = '/create-bill';
                     });
                 }
-                console.log(response.billId);
             });
     };
     return (
