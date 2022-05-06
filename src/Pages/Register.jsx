@@ -7,6 +7,7 @@ import Input from '../Components/Input';
 import './Styles/Resgister.css';
 
 import utils from '../Components/Utils.json';
+import './Styles/Resgister.css';
 
 export default function Register(props) {
     const [enteredName, setEnteredName] = useState('');
