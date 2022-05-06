@@ -6,7 +6,7 @@ import CubicMetersInfoForm from '../Components/CubicMetersInfoForm';
 import MainBillInfoForm from '../Components/MainBillInfoForm';
 import SewerageInfoForm from '../Components/SewerageInfoForm';
 import utils from '../Components/Utils.json';
-import '../Components/Styles/Card.css';
+import './Styles/NewConsumption.css'
 export default function NewConsumption(props) {
     const { userLoginState } = props;
     const [formConsumptionStep, setFormConsumptionStep] = useState(1);
