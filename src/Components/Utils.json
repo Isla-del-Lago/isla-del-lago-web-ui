@@ -1,11 +1,12 @@
 {
-    "urlBase": "http://localhost:9000/api/v1",
+    "urlUserBase": "http://localhost:9000/api/v1",
+    "urlBillBase": "http://localhost:9003/api/v1",
     "keys": {
         "X-uuid": "X-uuid",
         "Token": "Token",
-        "UserLoginStatus": "UserLoginStatus"
+        "UserLoginState": "UserLoginState"
     },
     "headers": {
-        "Content-Type": "application/json;charset=UTF-8"
+        "Content-Type": "application/json"
     }
 }

@@ -1,7 +1,7 @@
 .customButton {
     width: 90%;
     padding: 10px;
-    margin: 20px auto 0;
+    margin: 0 auto;
     background-color: #005ff983;
     color: white;
     font-weight: bold;
@@ -21,4 +21,15 @@
 .enabled {
     background-color: #005ff9;
     color: white;
+}
+
+Form .customButton {
+    margin-top: 10px;
+}
+
+.navbar .customButton {
+    width: auto;
+    margin-right: 10px;
+    color: #000;
+    background-color: white;
 }

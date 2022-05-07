@@ -4,19 +4,24 @@ import Button from '../Components/Button';
 import Card from '../Components/Card';
 import Form from '../Components/Form';
 import Input from '../Components/Input';
+import './Styles/Resgister.css';
+
 import utils from '../Components/Utils.json';
 import './Styles/Resgister.css';
 
 export default function Register(props) {
     const [enteredName, setEnteredName] = useState('');
     const [enteredEmail, setEnteredEmail] = useState('');
+    const [enteredApartment, setEnteredApartment] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [buttonState, setButtonState] = useState('disabled');
+
     useEffect(() => {
         if (
             enteredName.length > 0 &&
             enteredEmail.length > 0 &&
+            enteredApartment.length > 0 &&
             enteredPassword.length > 0
         ) {
             setButtonDisabled(false);
@@ -25,12 +30,13 @@ export default function Register(props) {
         if (
             enteredName.length === 0 ||
             enteredEmail.length === 0 ||
+            enteredApartment.length === 0 ||
             enteredPassword.length === 0
         ) {
             setButtonDisabled(true);
             setButtonState('disabled');
         }
-    }, [enteredName, enteredEmail, enteredPassword]);
+    }, [enteredName, enteredEmail, enteredApartment, enteredPassword]);
 
     const setNameHandler = (event) => {
         setEnteredName(event.target.value);
@@ -38,23 +44,27 @@ export default function Register(props) {
     const setEmailHandler = (event) => {
         setEnteredEmail(event.target.value);
     };
+    const setApartmentHandler = (event) => {
+        setEnteredApartment(event.target.value);
+    };
     const setPasswordHandler = (event) => {
         setEnteredPassword(event.target.value);
     };
 
     const submitHandler = (event) => {
         event.preventDefault();
-            fetch(utils.urlBase + '/user/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': utils.headers['Content-Type'],
-                },
-                body: JSON.stringify({
-                    fullName: enteredName,
-                    email: enteredEmail,
-                    password: enteredPassword,
-                }),
-            })
+        fetch(utils.urlUserBase + '/user/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': utils.headers['Content-Type'],
+            },
+            body: JSON.stringify({
+                fullName: enteredName,
+                email: enteredEmail,
+                password: enteredPassword,
+                apartmentId: enteredApartment
+            }),
+        })
             .then((response) => response.json())
             .then((response) => {
                 if (response.message === 'User created') {
@@ -63,7 +73,7 @@ export default function Register(props) {
                         text: 'Te has registrado exitosamente',
                         icon: 'success',
                         confirmButtonText: 'Continuar',
-                    }).then((value) => {
+                    }).then(() => {
                         document.location = '/login';
                     });
                 }
@@ -71,7 +81,7 @@ export default function Register(props) {
                     Swal.fire({
                         title: response.errorCode,
                         text: response.error,
-                        icon: 'error',
+                        icon: 'warning',
                         confirmButtonText: 'Continuar',
                     });
                 }
@@ -93,6 +103,7 @@ export default function Register(props) {
                     <div className='customForm--title'> Registro </div>
                     <Input
                         onChange={setNameHandler}
+                        autoFocus={true}
                         type='text'
                         placeHolder='Escribe tu nombre'
                         id='userName'
@@ -103,6 +114,13 @@ export default function Register(props) {
                         type='email'
                         placeHolder='Escribe tu correo electronico'
                         id='userEmail'
+                        required={true}
+                    />
+                    <Input
+                        onChange={setApartmentHandler}
+                        type='text'
+                        placeHolder='¿Cual es tu apartamento?'
+                        id='userApartment'
                         required={true}
                     />
                     <Input

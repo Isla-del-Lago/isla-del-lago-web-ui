@@ -7,3 +7,8 @@
     border: 2px solid #f5f4f9;
     border-radius: 10px;
 }
+
+.dateLabel {
+    margin-top: 5px;
+    font-size: 15px;
+}
