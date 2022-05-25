@@ -29,23 +29,6 @@ export default function SewerageInfoForm(props) {
         }
     }, [alc_fijo_rsd, alc_rsd_bsc, alc_rsd_bsc_sup]);
 
-    const today = new Date();
-    let maxDate;
-    if (today.getMonth() < 9) {
-        maxDate =
-            today.getFullYear() +
-            '-0' +
-            parseInt(today.getMonth() + 1) +
-            '-' +
-            parseInt(today.getDate());
-    } else {
-        maxDate =
-            today.getFullYear() +
-            '-' +
-            parseInt(today.getMonth() + 1) +
-            '-' +
-            parseInt(today.getDate());
-    }
     const setalc_fijo_rsdHandler = (event) => {
         setalc_fijo_rsd(event.target.value);
     };
@@ -74,23 +57,21 @@ export default function SewerageInfoForm(props) {
                 onChange={setalc_fijo_rsdHandler}
                 type='number'
                 placeHolder='Cargo fijo residencial'
-                id='userEmail'
+                id='alc_fijo_rsdHandler'
                 required={true}
-                maxDate={maxDate}
             />
             <Input
                 onChange={setalc_rsd_bscHandler}
                 type='number'
                 placeHolder='Consumo residencial básico'
-                id='userPassword'
+                id='alc_rsd_bscHandler'
                 required={true}
-                maxDate={maxDate}
             />
             <Input
                 onChange={setalc_rsd_bsc_supHandler}
                 type='number'
                 placeHolder='Consumo residencial superior a básico'
-                id='userPassword'
+                id='alc_rsd_bsc_supHandler'
                 required={true}
             />
             <Button

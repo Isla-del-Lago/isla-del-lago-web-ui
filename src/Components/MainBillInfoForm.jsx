@@ -34,30 +34,36 @@ export default function MainBillInfoForm(props) {
             setButtonState('disabled');
         }
     }, [enteredStartDate, enteredEndDate, enteredDiscounts, enteredCleaning]);
-
     const today = new Date();
     let maxDate;
     if (today.getMonth() < 9) {
         maxDate =
-            today.getFullYear() +
-            '-0' +
-            parseInt(today.getMonth() + 1) +
-            '-' +
-            parseInt(today.getDate());
+            today.getFullYear() + '-' + '0'  + parseInt(today.getMonth() + 1) + '-';
+        if (today.getDate() < 9) {
+            maxDate += '0' + parseInt(today.getDate());
+        }
+        else{
+            maxDate += parseInt(today.getDate());
+        }
     } else {
         maxDate =
             today.getFullYear() +
             '-' +
             parseInt(today.getMonth() + 1) +
-            '-' +
-            parseInt(today.getDate());
+            '-'
+            if (today.getDate() < 9) {
+                maxDate += '0' + parseInt(today.getDate());
+            }
+            else{
+                maxDate += parseInt(today.getDate());
+            }
     }
     const setStartDateHandler = (event) => {
         setEnteredMinDate(event.target.value);
-        setEnteredStartDate(event.target.value + 'T00:00:01');
+        setEnteredStartDate(event.target.value);
     };
     const setEndDateHandler = (event) => {
-        setEnteredEndDate(event.target.value + 'T00:00:01');
+        setEnteredEndDate(event.target.value);
     };
     const setDiscountsHandler = (event) => {
         setEnteredDiscounts(event.target.value);

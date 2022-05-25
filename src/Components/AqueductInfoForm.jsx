@@ -12,40 +12,23 @@ export default function AqueductInfoForm(props) {
 
     useEffect(() => {
         if (
-            acue_fijo_rsd.length > 0 &&
-            acue_rsd_bsc.length > 0 &&
-            acue_rsd_bsc_sup.length > 0
+            acue_fijo_rsd > 0 &&
+            acue_rsd_bsc > 0 &&
+            acue_rsd_bsc_sup > 0
         ) {
             setButtonDisabled(false);
             setButtonState('enabled');
         }
         if (
-            acue_fijo_rsd.length === 0 ||
-            acue_rsd_bsc.length === 0 ||
-            acue_rsd_bsc_sup.length === 0
+            !acue_fijo_rsd ||
+            !acue_rsd_bsc ||
+            !acue_rsd_bsc_sup
         ) {
             setButtonDisabled(true);
             setButtonState('disabled');
         }
     }, [acue_fijo_rsd, acue_rsd_bsc, acue_rsd_bsc_sup]);
 
-    const today = new Date();
-    let maxDate;
-    if (today.getMonth() < 9) {
-        maxDate =
-            today.getFullYear() +
-            '-0' +
-            parseInt(today.getMonth() + 1) +
-            '-' +
-            parseInt(today.getDate());
-    } else {
-        maxDate =
-            today.getFullYear() +
-            '-' +
-            parseInt(today.getMonth() + 1) +
-            '-' +
-            parseInt(today.getDate());
-    }
     const setacue_fijo_rsdHandler = (event) => {
         setacue_fijo_rsd(event.target.value);
     };
@@ -63,34 +46,31 @@ export default function AqueductInfoForm(props) {
         props.onFormComplete();
     };
     const backButton = () => {
-        props.onBackButton()
+        props.onBackButton();
     };
     return (
         <Form className='customForm' onSubmit={submitHandler}>
-            <span className='backButton' onClick={backButton}>
-            </span>
+            <span className='backButton' onClick={backButton}></span>
             <div className='customForm--title'>Acueducto $</div>
             <Input
                 onChange={setacue_fijo_rsdHandler}
                 type='number'
                 placeHolder='Cargo fijo residencial'
-                id='userEmail'
+                id='acue_fijo_rsdHandler'
                 required={true}
-                maxDate={maxDate}
             />
             <Input
                 onChange={setacue_rsd_bscHandler}
                 type='number'
                 placeHolder='Consumo residencial básico'
-                id='userPassword'
+                id='acue_rsd_bscHandler'
                 required={true}
-                maxDate={maxDate}
             />
             <Input
                 onChange={setacue_rsd_bsc_supHandler}
                 type='number'
                 placeHolder='Consumo residencial superior a básico'
-                id='userPassword'
+                id='acue_rsd_bsc_supHandler'
                 required={true}
             />
             <Button

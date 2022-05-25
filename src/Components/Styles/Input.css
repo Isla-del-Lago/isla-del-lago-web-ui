@@ -8,7 +8,9 @@
     border-radius: 10px;
 }
 
+.inputLabel,
 .dateLabel {
-    margin-top: 5px;
-    font-size: 15px;
+    margin: 5px 0;
+    font-size: 18px;
+    font-weight: bold;
 }
