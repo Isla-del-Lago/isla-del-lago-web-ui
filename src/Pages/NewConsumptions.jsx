@@ -58,7 +58,6 @@ export default function NewConsumptions(props) {
                         confirmButtonText: 'Continuar',
                     }).then(() => {
                         consumptionsData = [];
-                        console.log(consumptionsData);
                     });
                 }
             })
