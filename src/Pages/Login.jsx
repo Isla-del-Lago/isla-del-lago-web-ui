@@ -96,7 +96,7 @@ export default function Login(props) {
                     <Button
                         state={buttonState}
                         type='submit'
-                        text='Iniciar sesion'
+                        text='Iniciar Sesion'
                         disabled={buttonDisabled}
                     />
                 </Form>

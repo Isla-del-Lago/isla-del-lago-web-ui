@@ -8,5 +8,17 @@
     },
     "headers": {
         "Content-Type": "application/json"
-    }
+    },
+    "apartments": [
+        "Apartamento 201",
+        "Apartamento 202",
+        "Apartamento 301",
+        "Apartamento 302",
+        "Apartamento 401",
+        "Apartamento 402",
+        "Apartamento 501",
+        "Apartamento 502",
+        "Local 1",
+        "Local 2"
+    ]
 }

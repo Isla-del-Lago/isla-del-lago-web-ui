@@ -12,8 +12,8 @@ describe("rendering components", () => {
         const cardTitle = getByText("Isla del lago")
         const cardSubtitle = getByText("Water Manager")
         const formTitle = getByText("Iniciar sesion")
-        const emailInput = getByPlaceholderText('Escribe tu correo electronico')
-        const passwordInput = getByPlaceholderText('Escribe tu contraseña')
+        const emailInput = getByPlaceholderText('Escriba su correo electrónico')
+        const passwordInput = getByPlaceholderText('Escriba su contraseña')
         const formButton = getByText("Iniciar Sesion")
 
         expect(cardTitle.className).toBe('customCard__titleContainer--title')

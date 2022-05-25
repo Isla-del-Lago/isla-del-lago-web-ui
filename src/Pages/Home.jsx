@@ -6,9 +6,11 @@ export default function Home(props) {
     return (
         <div className='home'>
             {userLoginState && (
-                <Link to='/create-bill'>
-                    <button className='customButton'>Nueva factura</button>
-                </Link>
+                <div className='buttonsContainer'>
+                    <Link to='/create-bill'>
+                        <button className='customButton'>Nueva factura</button>
+                    </Link>
+                </div>
             )}
         </div>
     );

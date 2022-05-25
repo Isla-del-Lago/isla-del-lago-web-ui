@@ -8,6 +8,7 @@ var cardTitle;
 var cardSubtitle;
 var formTitle;
 var nameInput;
+var apartmentInput;
 var emailInput;
 var passwordInput;
 var formButton;
@@ -24,6 +25,7 @@ describe('rendering components', () => {
         formTitle = getByText('Registro');
         nameInput = getByPlaceholderText('Escribe tu nombre');
         emailInput = getByPlaceholderText('Escribe tu correo electronico');
+        apartmentInput = getByPlaceholderText('¿Cual es tu apartamento?');
         passwordInput = getByPlaceholderText('Escribe tu contraseña');
         formButton = getByText('Registrarme');
 
@@ -52,36 +54,43 @@ describe('rendering components', () => {
 
         fireEvent.change(nameInput, { target: { value: 'Bruce Wayne' } });
         fireEvent.change(emailInput, { target: { value: '' } });
+        fireEvent.change(apartmentInput, { target: { value: '' } });
         fireEvent.change(passwordInput, { target: { value: '' } });
         expect(formButton.className).toBe('customButton disabled');
 
         fireEvent.change(nameInput, { target: { value: 'Bruce Wayne' } });
         fireEvent.change(emailInput, { target: { value: 'bruce@wayne.com' } });
+        fireEvent.change(apartmentInput, { target: { value: '' } });
         fireEvent.change(passwordInput, { target: { value: '' } });
         expect(formButton.className).toBe('customButton disabled');
 
         fireEvent.change(nameInput, { target: { value: 'Bruce Wayne' } });
         fireEvent.change(emailInput, { target: { value: '' } });
+        fireEvent.change(apartmentInput, { target: { value: '' } });
         fireEvent.change(passwordInput, { target: { value: 'batman' } });
         expect(formButton.className).toBe('customButton disabled');
 
         fireEvent.change(nameInput, { target: { value: '' } });
         fireEvent.change(emailInput, { target: { value: 'bruce@wayne.com' } });
+        fireEvent.change(apartmentInput, { target: { value: '' } });
         fireEvent.change(passwordInput, { target: { value: '' } });
         expect(formButton.className).toBe('customButton disabled');
 
         fireEvent.change(nameInput, { target: { value: '' } });
         fireEvent.change(emailInput, { target: { value: 'bruce@wayne.com' } });
+        fireEvent.change(apartmentInput, { target: { value: '' } });
         fireEvent.change(passwordInput, { target: { value: 'baman' } });
         expect(formButton.className).toBe('customButton disabled');
 
         fireEvent.change(nameInput, { target: { value: '' } });
         fireEvent.change(emailInput, { target: { value: '' } });
+        fireEvent.change(apartmentInput, { target: { value: '' } });
         fireEvent.change(passwordInput, { target: { value: 'batman' } });
         expect(formButton.className).toBe('customButton disabled');
 
         fireEvent.change(nameInput, { target: { value: 'Bruce Wayne' } });
         fireEvent.change(emailInput, { target: { value: 'bruce@wayne.com' } });
+        fireEvent.change(apartmentInput, { target: { value: 'Apartamento 201' } });
         fireEvent.change(passwordInput, { target: { value: 'batman' } });
         expect(formButton.className).toBe('customButton enabled');
         expect(formButton.disabled).toBe(false);

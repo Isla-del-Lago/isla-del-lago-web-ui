@@ -4,8 +4,10 @@ import Login from './Pages/Login';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import Home from './Pages/Home';
-import NewConsumption from './Pages/NewConsumption';
 import Layout from './Components/Layout';
+import NewBill from './Pages/NewBill';
+import NewConsumptions from './Pages/NewConsumptions';
+
 
 function App() {
     const [userLoginState, setUserLoginState] = useState(false);
@@ -32,7 +34,15 @@ function App() {
                         <Route
                             path='/create-bill'
                             element={
-                                <NewConsumption
+                                <NewBill
+                                    userLoginState={userLoginState}
+                                />
+                            }
+                        />
+                        <Route
+                            path='/calculate-percentages'
+                            element={
+                                <NewConsumptions
                                     userLoginState={userLoginState}
                                 />
                             }

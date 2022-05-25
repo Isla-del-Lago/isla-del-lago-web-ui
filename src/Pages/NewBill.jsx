@@ -6,8 +6,9 @@ import CubicMetersInfoForm from '../Components/CubicMetersInfoForm';
 import MainBillInfoForm from '../Components/MainBillInfoForm';
 import SewerageInfoForm from '../Components/SewerageInfoForm';
 import utils from '../Components/Utils.json';
-import './Styles/NewConsumption.css'
-export default function NewConsumption(props) {
+import './Styles/NewBill.css';
+
+export default function NewBill(props) {
     const { userLoginState } = props;
     const [formConsumptionStep, setFormConsumptionStep] = useState(1);
     const formSectionCompleteHandler = () => {
@@ -34,25 +35,25 @@ export default function NewConsumption(props) {
                     sessionStorage.getItem('m3_rsd_bsc_sup')
                 ),
                 discounts: parseInt(sessionStorage.getItem('discounts')),
-                residentialFixedAqueduct: parseInt(
+                residentialFixedAqueduct: parseFloat(
                     sessionStorage.getItem('acue_fijo_rsd')
                 ),
-                residentialBasicAqueduct: parseInt(
+                residentialBasicAqueduct: parseFloat(
                     sessionStorage.getItem('acue_rsd_bsc')
                 ),
-                residentialBasicSuperiorAqueduct: parseInt(
+                residentialBasicSuperiorAqueduct: parseFloat(
                     sessionStorage.getItem('acue_rsd_bsc_sup')
                 ),
-                residentialFixedSewerage: parseInt(
+                residentialFixedSewerage: parseFloat(
                     sessionStorage.getItem('alc_fijo_rsd')
                 ),
-                residentialBasicSewerage: parseInt(
+                residentialBasicSewerage: parseFloat(
                     sessionStorage.getItem('alc_rsd_bsc')
                 ),
-                residentialBasicSuperiorSewerage: parseInt(
+                residentialBasicSuperiorSewerage: parseFloat(
                     sessionStorage.getItem('alc_rsd_bsc_sup')
                 ),
-                cleaning: parseInt(sessionStorage.getItem('cleaning')),
+                cleaning: parseFloat(sessionStorage.getItem('cleaning')),
             }),
         })
             .then((response) => response.json())
@@ -63,7 +64,8 @@ export default function NewConsumption(props) {
                         icon: 'success',
                         confirmButtonText: 'Continuar',
                     }).then(() => {
-                        document.location = '/';
+                        sessionStorage.setItem('billId', response.billId);
+                        document.location = '/calculate-percentages';
                     });
                 }
                 if (response.error) {

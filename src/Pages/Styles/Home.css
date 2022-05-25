@@ -10,5 +10,13 @@
     font-weight: bold;
 }
 
+.buttonsContainer {
+    margin: 0 auto;
+    width: 80%;
+    max-width: 800px;
+    display: flex;
+    justify-content: center;
+}
+
 
 /* .home .customButton {} */
