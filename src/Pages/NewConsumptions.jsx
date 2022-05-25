@@ -91,7 +91,7 @@ export default function NewConsumptions(props) {
                             <Input
                                 label={apartment}
                                 id={apartment}
-                                key={Math.random()}
+                                key={apartment}
                                 onChange={setConsumptionValue}
                                 type='number'
                                 // placeHolder={apartment}
