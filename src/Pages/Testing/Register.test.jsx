@@ -23,10 +23,10 @@ describe('rendering components', () => {
         cardTitle = getByText('Isla del lago');
         cardSubtitle = getByText('Water Manager');
         formTitle = getByText('Registro');
-        nameInput = getByPlaceholderText('Escribe tu nombre');
-        emailInput = getByPlaceholderText('Escribe tu correo electronico');
-        apartmentInput = getByPlaceholderText('¿Cual es tu apartamento?');
-        passwordInput = getByPlaceholderText('Escribe tu contraseña');
+        nameInput = getByPlaceholderText('Escriba su nombre');
+        emailInput = getByPlaceholderText('Escriba su correo electronico');
+        apartmentInput = getByPlaceholderText('¿Cual es su apartamento?');
+        passwordInput = getByPlaceholderText('Escriba su contraseña');
         formButton = getByText('Registrarme');
 
         expect(cardTitle.className).toBe('customCard__titleContainer--title');
