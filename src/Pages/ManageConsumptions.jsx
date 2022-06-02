@@ -79,6 +79,7 @@ export default function ManageConsumptions(props) {
     }, [enteredStartDate, enteredEndDate, enteredApartmentId]);
 
     const submitHandler = (event) => {
+        setLoaderVisibility('visible');
         event.preventDefault();
         fetch(
             `${urlBillBase}/api/v1/bill/billDate?startDate=${enteredStartDate}&endDate=${enteredEndDate}`,
@@ -93,7 +94,6 @@ export default function ManageConsumptions(props) {
         )
             .then((response) => response.json())
             .then((response) => {
-                setLoaderVisibility('visible');
                 if (response.billId) {
                     setCurrentBill(response);
                     fetch(
