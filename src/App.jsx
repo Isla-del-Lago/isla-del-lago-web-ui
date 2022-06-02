@@ -16,8 +16,8 @@ function App() {
         urlUserBase = 'http://localhost:9000';
         urlBillBase = 'http://localhost:9003';
     } else {
-        urlUserBase = 'https://isla-del-lago-user-mngr-qa.herokuapp.com/';
-        urlBillBase = 'https://isla-del-lago-bill-mngr-qa.herokuapp.com/';
+        urlUserBase = 'https://isla-del-lago-user-mngr-qa.herokuapp.com';
+        urlBillBase = 'https://isla-del-lago-bill-mngr-qa.herokuapp.com';
     }
     const [userLoginState, setUserLoginState] = useState(false);
     useEffect(() => {
