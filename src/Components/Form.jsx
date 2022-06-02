@@ -1,13 +1,15 @@
-import React from "react";
-import './Styles/Form.css'
+import React from 'react';
+import './Styles/Form.css';
 
 export default function Form(props) {
-    const { onSubmit } = props
+    const { onSubmit } = props;
     return (
         <React.Fragment>
-            <form className="customForm" onSubmit={onSubmit}>
-                {props.children}
-            </form>
+            <div className='formsContainer'>
+                <form className='customForm' onSubmit={onSubmit}>
+                    {props.children}
+                </form>
+            </div>
         </React.Fragment>
-    )
+    );
 }

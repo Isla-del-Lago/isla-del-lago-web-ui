@@ -10,6 +10,11 @@ export default function Home(props) {
                     <Link to='/create-bill'>
                         <button className='customButton'>Nueva factura</button>
                     </Link>
+                    <Link to='/manage-consumptions'>
+                        <button className='customButton'>
+                            Gestionar facturas
+                        </button>
+                    </Link>
                 </div>
             )}
         </div>

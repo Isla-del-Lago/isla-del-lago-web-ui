@@ -7,6 +7,7 @@ import Input from '../Components/Input';
 import utils from '../Components/Utils.json';
 
 export default function Login(props) {
+    const {urlUserBase} = props
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
     const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -32,7 +33,7 @@ export default function Login(props) {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        fetch(utils.urlUserBase + '/user/login', {
+        fetch(`${urlUserBase}/api/v1/user/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': utils.headers['Content-Type'],

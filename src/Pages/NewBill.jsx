@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
+import utils from '../Components/Utils.json';
+import './Styles/NewBill.css';
 import AqueductInfoForm from '../Components/AqueductInfoForm';
 import CubicMetersInfoForm from '../Components/CubicMetersInfoForm';
 import MainBillInfoForm from '../Components/MainBillInfoForm';
 import SewerageInfoForm from '../Components/SewerageInfoForm';
-import utils from '../Components/Utils.json';
-import './Styles/NewBill.css';
 
 export default function NewBill(props) {
-    const { userLoginState } = props;
+    const { userLoginState, urlUserBase, urlBillBase } = props;
     const [formConsumptionStep, setFormConsumptionStep] = useState(1);
     const formSectionCompleteHandler = () => {
         setFormConsumptionStep(formConsumptionStep + 1);
@@ -18,7 +18,7 @@ export default function NewBill(props) {
         setFormConsumptionStep(formConsumptionStep - 1);
     };
     const submitHandler = () => {
-        fetch(utils.urlBillBase + '/bill/create', {
+        fetch(`${urlBillBase}/api/v1/bill/create`, {
             method: 'POST',
             headers: {
                 'Content-Type': utils.headers['Content-Type'],
@@ -92,36 +92,28 @@ export default function NewBill(props) {
             {userLoginState && (
                 <>
                     {formConsumptionStep === 1 && (
-                        <div className='formsContainer'>
-                            <MainBillInfoForm
-                                onFormComplete={formSectionCompleteHandler}
-                                onBackButton={onBackButtonHandler}
-                            />
-                        </div>
+                        <MainBillInfoForm
+                            onFormComplete={formSectionCompleteHandler}
+                            onBackButton={onBackButtonHandler}
+                        />
                     )}
                     {formConsumptionStep === 2 && (
-                        <div className='formsContainer'>
-                            <CubicMetersInfoForm
-                                onFormComplete={formSectionCompleteHandler}
-                                onBackButton={onBackButtonHandler}
-                            />
-                        </div>
+                        <CubicMetersInfoForm
+                            onFormComplete={formSectionCompleteHandler}
+                            onBackButton={onBackButtonHandler}
+                        />
                     )}
                     {formConsumptionStep === 3 && (
-                        <div className='formsContainer'>
-                            <AqueductInfoForm
-                                onFormComplete={formSectionCompleteHandler}
-                                onBackButton={onBackButtonHandler}
-                            />
-                        </div>
+                        <AqueductInfoForm
+                            onFormComplete={formSectionCompleteHandler}
+                            onBackButton={onBackButtonHandler}
+                        />
                     )}
                     {formConsumptionStep === 4 && (
-                        <div className='formsContainer'>
-                            <SewerageInfoForm
-                                onFormComplete={submitHandler}
-                                onBackButton={onBackButtonHandler}
-                            />
-                        </div>
+                        <SewerageInfoForm
+                            onFormComplete={submitHandler}
+                            onBackButton={onBackButtonHandler}
+                        />
                     )}
                 </>
             )}

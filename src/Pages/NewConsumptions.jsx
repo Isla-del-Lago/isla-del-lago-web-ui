@@ -9,10 +9,12 @@ import Button from '../Components/Button';
 const apartments = utils.apartments;
 let consumptionsData = [];
 export default function NewConsumptions(props) {
+    const { userLoginState, urlUserBase, urlBillBase } = props;
+
+
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const [buttonState, setButtonState] = useState('enabled');
 
-    const { userLoginState } = props;
 
     const setConsumptionValue = (event) => {
         sessionStorage.setItem(event.target.id, event.target.value);
@@ -26,7 +28,7 @@ export default function NewConsumptions(props) {
                 value: parseFloat(sessionStorage.getItem(apartment)),
             });
         });
-        fetch(utils.urlBillBase + '/bill/consumption/calculatePercentages', {
+        fetch(`${urlBillBase}/api/v1/bill/consumption/calculatePercentages`, {
             method: 'POST',
             headers: {
                 'Content-Type': utils.headers['Content-Type'],
