@@ -10,7 +10,7 @@ import utils from '../Components/Utils.json';
 import './Styles/Resgister.css';
 
 export default function Register(props) {
-    const {urlUserBase} = props
+    const { userLoginState, urlUserBase } = props;
     const [enteredName, setEnteredName] = useState('');
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredApartment, setEnteredApartment] = useState('');
@@ -18,7 +18,10 @@ export default function Register(props) {
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [buttonState, setButtonState] = useState('disabled');
 
-    
+    if (userLoginState) {
+        document.location = '/';
+    }
+
     useEffect(() => {
         if (
             enteredName.length > 0 &&
@@ -100,46 +103,48 @@ export default function Register(props) {
 
     return (
         <React.Fragment>
-            <Card title='Isla del lago' subtitle='Water Manager'>
-                <Form className='customForm' onSubmit={submitHandler}>
-                    <div className='customForm--title'> Registro </div>
-                    <Input
-                        onChange={setNameHandler}
-                        autoFocus={true}
-                        type='text'
-                        placeHolder='Escribe tu nombre'
-                        id='userName'
-                        required={true}
-                    />
-                    <Input
-                        onChange={setEmailHandler}
-                        type='email'
-                        placeHolder='Escribe tu correo electronico'
-                        id='userEmail'
-                        required={true}
-                    />
-                    <Input
-                        onChange={setApartmentHandler}
-                        type='text'
-                        placeHolder='¿Cual es tu apartamento?'
-                        id='userApartment'
-                        required={true}
-                    />
-                    <Input
-                        onChange={setPasswordHandler}
-                        type='password'
-                        placeHolder='Escribe tu contraseña'
-                        id='userPassword'
-                        required={true}
-                    />
-                    <Button
-                        state={buttonState}
-                        type='submit'
-                        text='Registrarme'
-                        disabled={buttonDisabled}
-                    />
-                </Form>
-            </Card>
+            {!userLoginState && (
+                <Card title='Isla del lago' subtitle='Water Manager'>
+                    <Form className='customForm' onSubmit={submitHandler}>
+                        <div className='customForm--title'> Registro </div>
+                        <Input
+                            onChange={setNameHandler}
+                            autoFocus={true}
+                            type='text'
+                            placeHolder='Escriba su nombre'
+                            id='userName'
+                            required={true}
+                        />
+                        <Input
+                            onChange={setEmailHandler}
+                            type='email'
+                            placeHolder='Escriba su correo electronico'
+                            id='userEmail'
+                            required={true}
+                        />
+                        <Input
+                            onChange={setApartmentHandler}
+                            type='text'
+                            placeHolder='¿Cual es su apartamento?'
+                            id='userApartment'
+                            required={true}
+                        />
+                        <Input
+                            onChange={setPasswordHandler}
+                            type='password'
+                            placeHolder='Escriba su contraseña'
+                            id='userPassword'
+                            required={true}
+                        />
+                        <Button
+                            state={buttonState}
+                            type='submit'
+                            text='Registrarme'
+                            disabled={buttonDisabled}
+                        />
+                    </Form>
+                </Card>
+            )}
         </React.Fragment>
     );
 }

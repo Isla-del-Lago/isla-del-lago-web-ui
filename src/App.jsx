@@ -22,7 +22,7 @@ function App() {
     const [userLoginState, setUserLoginState] = useState(false);
     useEffect(() => {
         setUserLoginState(sessionStorage.UserLoginState);
-    });
+    }, []);
     const logout = () => {
         setUserLoginState(false);
         document.location = '/';
@@ -41,19 +41,16 @@ function App() {
                         />
                         <Route
                             path='/register'
-                            element={
-                                <Register
-                                    urlUserBase={urlUserBase}
-                                    urlBillBase={urlBillBase}
-                                />
-                            }
+                            element={<Register 
+                                userLoginState={userLoginState}
+                                urlUserBase={urlUserBase} />}
                         />
                         <Route
                             path='/login'
                             element={
                                 <Login
+                                    userLoginState={userLoginState}
                                     urlUserBase={urlUserBase}
-                                    urlBillBase={urlBillBase}
                                 />
                             }
                         />
@@ -62,7 +59,6 @@ function App() {
                             element={
                                 <NewBill
                                     userLoginState={userLoginState}
-                                    urlUserBase={urlUserBase}
                                     urlBillBase={urlBillBase}
                                 />
                             }
@@ -72,7 +68,6 @@ function App() {
                             element={
                                 <NewConsumptions
                                     userLoginState={userLoginState}
-                                    urlUserBase={urlUserBase}
                                     urlBillBase={urlBillBase}
                                 />
                             }
@@ -82,7 +77,6 @@ function App() {
                             element={
                                 <ManageConsumptions
                                     userLoginState={userLoginState}
-                                    urlUserBase={urlUserBase}
                                     urlBillBase={urlBillBase}
                                 />
                             }

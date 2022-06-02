@@ -7,7 +7,7 @@ input::-webkit-inner-spin-button {
 
 /* Firefox */
 
-input[type=number] {
+input[type='number'] {
     -moz-appearance: textfield;
 }
 
@@ -18,15 +18,9 @@ input[type=number] {
 }
 
 body {
-    background-color: #e1e1e1;
+    background-color: rgb(100, 100, 100);
 }
 
 .App {
     flex-wrap: wrap;
-}
-
-@media (min-width: 600px) {
-    body {
-        background-color: bisque;
-    }
 }

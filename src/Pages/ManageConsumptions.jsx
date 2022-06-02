@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
-import { Link } from 'react-router-dom';
 import utils from '../Components/Utils.json';
 import Button from '../Components/Button';
 import Form from '../Components/Form';
@@ -8,10 +7,14 @@ import DateInput from '../Components/DateInput';
 import Input from '../Components/Input';
 import ApartmentConsumptionTable from '../Components/ApartmentConsumptionTable';
 import './Styles/ManageConsumptions.css';
+import Loader from '../Components/Loader';
 
 export default function ManageConsumptions(props) {
     const { userLoginState, urlBillBase } = props;
 
+    if (!userLoginState) {
+        document.location = '/';
+    }
     const today = new Date();
     let maxDate;
     if (today.getMonth() < 9) {
@@ -39,6 +42,7 @@ export default function ManageConsumptions(props) {
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [buttonState, setButtonState] = useState('disabled');
     const [searched, setSearched] = useState(false);
+    const [loaderVisibility, setLoaderVisibility] = useState('invisible');
 
     const [enteredStartDate, setEnteredStartDate] = useState('');
     const [enteredEndDate, setEnteredEndDate] = useState('');
@@ -89,7 +93,7 @@ export default function ManageConsumptions(props) {
         )
             .then((response) => response.json())
             .then((response) => {
-                console.log(response);
+                setLoaderVisibility('visible');
                 if (response.billId) {
                     setCurrentBill(response);
                     fetch(
@@ -102,12 +106,14 @@ export default function ManageConsumptions(props) {
                                 Authorization: sessionStorage.getItem('Token'),
                             },
                         }
-                        )
+                    )
                         .then((response) => response.json())
                         .then((response) => {
-                            setSearched(true)
+                            setSearched(true);
+                            setLoaderVisibility('invisible');
                             setCurrentConsumption(response);
                             if (response.error) {
+                                setSearched(false);
                                 Swal.fire({
                                     title: response.errorCode,
                                     text: response.error,
@@ -116,14 +122,15 @@ export default function ManageConsumptions(props) {
                                 });
                             }
                         })
-                        .catch((error) =>
+                        .catch((error) => {
+                            setSearched(false);
                             Swal.fire({
                                 title: 'Error!' + error.State,
                                 text: error.error,
                                 icon: 'error',
                                 confirmButtonText: 'Continuar',
-                            })
-                        );
+                            });
+                        });
                 }
                 if (response.error) {
                     Swal.fire({
@@ -146,13 +153,6 @@ export default function ManageConsumptions(props) {
 
     return (
         <React.Fragment>
-            {!userLoginState && (
-                <div className='home'>
-                    <Link to='/login'>
-                        <button className='customButton'>Iniciar sesión</button>
-                    </Link>
-                </div>
-            )}
             {userLoginState && (
                 <Form className='customForm' onSubmit={submitHandler}>
                     <div className='customForm--title'>
@@ -192,6 +192,7 @@ export default function ManageConsumptions(props) {
                     />
                 </Form>
             )}
+            <Loader visible={loaderVisibility} />
             {searched && (
                 <ApartmentConsumptionTable
                     residentialBasicCubicMeters={
@@ -218,27 +219,27 @@ export default function ManageConsumptions(props) {
                     residentialBasicSuperiorSewerageFee={
                         currentBill.residentialBasicSuperiorSewerage
                     }
-                    residentialFixedAqueduct={
-                        currentConsumption.residentialFixedAqueduct
-                    }
-                    residentialBasicAqueduct={
-                        currentConsumption.residentialBasicAqueduct
-                    }
-                    residentialBasicSuperiorAqueduct={
-                        currentConsumption.residentialBasicSuperiorAqueduct
-                    }
-                    residentialFixedSewerage={
-                        currentConsumption.residentialFixedSewerage
-                    }
-                    residentialBasicSewerage={
-                        currentConsumption.residentialBasicSewerage
-                    }
-                    residentialBasicSuperiorSewerage={
-                        currentConsumption.residentialBasicSuperiorSewerage
-                    }
-                    cleaning={currentConsumption.cleaning}
-                    discounts={currentConsumption.discounts}
-                    total={currentConsumption.total}
+                    residentialFixedAqueduct={parseFloat(currentConsumption.residentialFixedAqueduct).toFixed(
+                        2
+                    )}
+                    residentialBasicAqueduct={parseFloat(currentConsumption.residentialBasicAqueduct).toFixed(
+                        2
+                    )}
+                    residentialBasicSuperiorAqueduct={parseFloat(currentConsumption.residentialBasicSuperiorAqueduct).toFixed(
+                        2
+                    )}
+                    residentialFixedSewerage={parseFloat(currentConsumption.residentialFixedSewerage).toFixed(
+                        2
+                    )}
+                    residentialBasicSewerage={parseFloat(currentConsumption.residentialBasicSewerage).toFixed(
+                        2
+                    )}
+                    residentialBasicSuperiorSewerage={parseFloat(currentConsumption.residentialBasicSuperiorSewerage).toFixed(
+                        2
+                    )}
+                    cleaning={parseFloat(currentConsumption.cleaning).toFixed(2)}
+                    discounts={parseFloat(currentConsumption.discounts).toFixed(2)}
+                    total={parseFloat(currentConsumption.total).toFixed(2)}
                 />
             )}
         </React.Fragment>

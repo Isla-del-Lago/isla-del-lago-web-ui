@@ -7,12 +7,15 @@ import Input from '../Components/Input';
 import utils from '../Components/Utils.json';
 
 export default function Login(props) {
-    const {urlUserBase} = props
+    const {userLoginState, urlUserBase} = props
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [buttonState, setButtonState] = useState('disabled');
 
+    if(userLoginState){
+        document.location= '/'
+    }
     useEffect(() => {
         if (enteredEmail.length > 0 && enteredPassword.length > 0) {
             setButtonDisabled(false);
@@ -76,7 +79,7 @@ export default function Login(props) {
 
     return (
         <React.Fragment>
-            <Card title='Isla del lago' subtitle='Water Manager'>
+            {!userLoginState && <Card title='Isla del lago' subtitle='Water Manager'>
                 <Form className='customForm' onSubmit={submitHandler}>
                     <div className='customForm--title'>Iniciar sesion</div>
                     <Input
@@ -101,7 +104,7 @@ export default function Login(props) {
                         disabled={buttonDisabled}
                     />
                 </Form>
-            </Card>
+            </Card>}
         </React.Fragment>
     );
 }

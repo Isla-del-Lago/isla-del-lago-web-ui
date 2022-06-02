@@ -5,6 +5,13 @@ export default function Home(props) {
     const { userLoginState } = props;
     return (
         <div className='home'>
+            {!userLoginState && (
+                <div className='titleContainer'>
+                    <h1 className='title'>
+                        Bienvenido, por favor inície sesíon
+                    </h1>
+                </div>
+            )}
             {userLoginState && (
                 <div className='buttonsContainer'>
                     <Link to='/create-bill'>

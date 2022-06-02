@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
-import { Link } from 'react-router-dom';
 import utils from '../Components/Utils.json';
 import './Styles/NewBill.css';
 import AqueductInfoForm from '../Components/AqueductInfoForm';
@@ -11,6 +10,11 @@ import SewerageInfoForm from '../Components/SewerageInfoForm';
 export default function NewBill(props) {
     const { userLoginState, urlBillBase } = props;
     const [formConsumptionStep, setFormConsumptionStep] = useState(1);
+
+    if(!userLoginState){
+        document.location= '/'
+    }
+
     const formSectionCompleteHandler = () => {
         setFormConsumptionStep(formConsumptionStep + 1);
     };
@@ -82,13 +86,6 @@ export default function NewBill(props) {
     };
     return (
         <React.Fragment>
-            {!userLoginState && (
-                <div className='home'>
-                    <Link to='/login'>
-                        <button className='customButton'>Iniciar sesión</button>
-                    </Link>
-                </div>
-            )}
             {userLoginState && (
                 <>
                     {formConsumptionStep === 1 && (

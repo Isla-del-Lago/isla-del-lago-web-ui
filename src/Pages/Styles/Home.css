@@ -18,5 +18,14 @@
     justify-content: center;
 }
 
+.titleContainer {
+    display: flex;
+    width: 100vw;
+    height: 80vh;
+    justify-content: center;
+    align-items: center;
+}
 
-/* .home .customButton {} */
+.title {
+    color: #fff;
+}

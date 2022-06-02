@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Swal from 'sweetalert2';
-import { Link } from 'react-router-dom';
 import './Styles/NewConsumptions.css';
 import Form from '../Components/Form';
 import Input from '../Components/Input';
@@ -11,10 +10,9 @@ let consumptionsData = [];
 export default function NewConsumptions(props) {
     const { userLoginState, urlBillBase } = props;
 
-
-    const [buttonDisabled, setButtonDisabled] = useState(false);
-    const [buttonState, setButtonState] = useState('enabled');
-
+    if (!userLoginState) {
+        document.location = '/';
+    }
 
     const setConsumptionValue = (event) => {
         sessionStorage.setItem(event.target.id, event.target.value);
@@ -76,13 +74,7 @@ export default function NewConsumptions(props) {
     };
     return (
         <React.Fragment>
-            {!userLoginState && (
-                <div className='home'>
-                    <Link to='/login'>
-                        <button className='customButton'>Iniciar sesión</button>
-                    </Link>
-                </div>
-            )}
+            
             {userLoginState && (
                 <div className='formsContainer'>
                     <Form className='customForm' onSubmit={submitHandler}>
@@ -101,10 +93,10 @@ export default function NewConsumptions(props) {
                             />
                         ))}
                         <Button
-                            state={buttonState}
+                            state='enabled'
                             type='submit'
                             text='Continuar'
-                            disabled={buttonDisabled}
+                            disabled={false}
                         />
                     </Form>
                 </div>
