@@ -10,7 +10,7 @@ import ApartmentConsumptionTable from '../Components/ApartmentConsumptionTable';
 import './Styles/ManageConsumptions.css';
 
 export default function ManageConsumptions(props) {
-    const { userLoginState, urlUserBase, urlBillBase } = props;
+    const { userLoginState, urlBillBase } = props;
 
     const today = new Date();
     let maxDate;
@@ -102,9 +102,10 @@ export default function ManageConsumptions(props) {
                                 Authorization: sessionStorage.getItem('Token'),
                             },
                         }
-                    )
+                        )
                         .then((response) => response.json())
                         .then((response) => {
+                            setSearched(true)
                             setCurrentConsumption(response);
                             if (response.error) {
                                 Swal.fire({
@@ -191,7 +192,7 @@ export default function ManageConsumptions(props) {
                     />
                 </Form>
             )}
-            {!searched && (
+            {searched && (
                 <ApartmentConsumptionTable
                     residentialBasicCubicMeters={
                         currentConsumption.residentialBasicCubicMeters

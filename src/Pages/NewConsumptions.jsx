@@ -9,7 +9,7 @@ import Button from '../Components/Button';
 const apartments = utils.apartments;
 let consumptionsData = [];
 export default function NewConsumptions(props) {
-    const { userLoginState, urlUserBase, urlBillBase } = props;
+    const { userLoginState, urlBillBase } = props;
 
 
     const [buttonDisabled, setButtonDisabled] = useState(false);

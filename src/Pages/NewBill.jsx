@@ -9,7 +9,7 @@ import MainBillInfoForm from '../Components/MainBillInfoForm';
 import SewerageInfoForm from '../Components/SewerageInfoForm';
 
 export default function NewBill(props) {
-    const { userLoginState, urlUserBase, urlBillBase } = props;
+    const { userLoginState, urlBillBase } = props;
     const [formConsumptionStep, setFormConsumptionStep] = useState(1);
     const formSectionCompleteHandler = () => {
         setFormConsumptionStep(formConsumptionStep + 1);
