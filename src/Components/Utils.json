@@ -1,6 +1,4 @@
 {
-    "urlUserBase": "http://localhost:9000/api/v1",
-    "urlBillBase": "http://localhost:9003/api/v1",
     "keys": {
         "X-uuid": "X-uuid",
         "Token": "Token",

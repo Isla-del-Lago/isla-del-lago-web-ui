@@ -1,10 +1,20 @@
-.customCard,
+.customCard {
+    margin: 5vh auto;
+}
+
+.customCard .formsContainer {
+    margin: 0;
+}
+
 .formsContainer {
     margin: 5vh auto;
+}
+
+.customCard,
+.formsContainer {
     width: 90vw;
     min-width: 200px;
     max-width: 300px;
-    /* height: 80vh; */
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -44,7 +54,6 @@
     .formsContainer {
         flex-direction: row;
         max-width: 700px;
-        margin-top: 20px;
     }
     .customCard__titleContainer {
         width: 50%;

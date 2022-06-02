@@ -10,6 +10,7 @@ import utils from '../Components/Utils.json';
 import './Styles/Resgister.css';
 
 export default function Register(props) {
+    const {urlUserBase} = props
     const [enteredName, setEnteredName] = useState('');
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredApartment, setEnteredApartment] = useState('');
@@ -17,6 +18,7 @@ export default function Register(props) {
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [buttonState, setButtonState] = useState('disabled');
 
+    
     useEffect(() => {
         if (
             enteredName.length > 0 &&
@@ -53,7 +55,7 @@ export default function Register(props) {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        fetch(utils.urlUserBase + '/user/create', {
+        fetch(`${urlUserBase}/api/v1/user/create`, {
             method: 'POST',
             headers: {
                 'Content-Type': utils.headers['Content-Type'],
@@ -62,7 +64,7 @@ export default function Register(props) {
                 fullName: enteredName,
                 email: enteredEmail,
                 password: enteredPassword,
-                apartmentId: enteredApartment
+                apartmentId: enteredApartment,
             }),
         })
             .then((response) => response.json())
