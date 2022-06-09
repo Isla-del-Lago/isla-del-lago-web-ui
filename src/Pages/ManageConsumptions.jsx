@@ -10,8 +10,7 @@ import './Styles/ManageConsumptions.css';
 import Loader from '../Components/Loader';
 
 export default function ManageConsumptions(props) {
-    const { userLoginState, urlBillBase } = props;
-
+    const { userLoginState } = props;
     if (!userLoginState) {
         document.location = '/';
     }
@@ -82,7 +81,7 @@ export default function ManageConsumptions(props) {
         setLoaderVisibility('visible');
         event.preventDefault();
         fetch(
-            `${urlBillBase}/api/v1/bill/billDate?startDate=${enteredStartDate}&endDate=${enteredEndDate}`,
+            `${process.env.REACT_APP_BILL_URL}/api/v1/bill/billDate?startDate=${enteredStartDate}&endDate=${enteredEndDate}`,
             {
                 method: 'GET',
                 headers: {
@@ -97,7 +96,7 @@ export default function ManageConsumptions(props) {
                 if (response.billId) {
                     setCurrentBill(response);
                     fetch(
-                        `${urlBillBase}/api/v1/bill/consumption/consumptionDetail/apartmentId/${enteredApartmentId}/billId/${response.billId}`,
+                        `${process.env.REACT_APP_BILL_URL}/api/v1/bill/consumption/consumptionDetail/apartmentId/${enteredApartmentId}/billId/${response.billId}`,
                         {
                             method: 'GET',
                             headers: {

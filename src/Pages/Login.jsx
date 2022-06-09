@@ -6,15 +6,17 @@ import Form from '../Components/Form';
 import Input from '../Components/Input';
 import utils from '../Components/Utils.json';
 
+
+
 export default function Login(props) {
-    const {userLoginState, urlUserBase} = props
+    const { userLoginState } = props;
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [buttonState, setButtonState] = useState('disabled');
 
-    if(userLoginState){
-        document.location= '/'
+    if (userLoginState) {
+        document.location = '/';
     }
     useEffect(() => {
         if (enteredEmail.length > 0 && enteredPassword.length > 0) {
@@ -36,7 +38,7 @@ export default function Login(props) {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        fetch(`${urlUserBase}/api/v1/user/login`, {
+        fetch(`${process.env.REACT_APP_USER_URL}/api/v1/user/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': utils.headers['Content-Type'],
@@ -79,32 +81,34 @@ export default function Login(props) {
 
     return (
         <React.Fragment>
-            {!userLoginState && <Card title='Isla del lago' subtitle='Water Manager'>
-                <Form className='customForm' onSubmit={submitHandler}>
-                    <div className='customForm--title'>Iniciar sesion</div>
-                    <Input
-                        onChange={setEmailHandler}
-                        autoFocus={true}
-                        type='email'
-                        placeHolder='Escriba su correo electrónico'
-                        id='userEmail'
-                        required={true}
-                    />
-                    <Input
-                        onChange={setPasswordHandler}
-                        type='password'
-                        placeHolder='Escriba su contraseña'
-                        id='userPassword'
-                        required={true}
-                    />
-                    <Button
-                        state={buttonState}
-                        type='submit'
-                        text='Iniciar Sesion'
-                        disabled={buttonDisabled}
-                    />
-                </Form>
-            </Card>}
+            {!userLoginState && (
+                <Card title='Isla del lago' subtitle='Water Manager'>
+                    <Form className='customForm' onSubmit={submitHandler}>
+                        <div className='customForm--title'>Iniciar sesion</div>
+                        <Input
+                            onChange={setEmailHandler}
+                            autoFocus={true}
+                            type='email'
+                            placeHolder='Escriba su correo electrónico'
+                            id='userEmail'
+                            required={true}
+                        />
+                        <Input
+                            onChange={setPasswordHandler}
+                            type='password'
+                            placeHolder='Escriba su contraseña'
+                            id='userPassword'
+                            required={true}
+                        />
+                        <Button
+                            state={buttonState}
+                            type='submit'
+                            text='Iniciar Sesion'
+                            disabled={buttonDisabled}
+                        />
+                    </Form>
+                </Card>
+            )}
         </React.Fragment>
     );
 }

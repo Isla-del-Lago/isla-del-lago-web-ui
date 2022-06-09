@@ -38,7 +38,7 @@ export default function MainBillInfoForm(props) {
     let maxDate;
     if (today.getMonth() < 9) {
         maxDate =
-            today.getFullYear() + '-' + '0'  + parseInt(today.getMonth() + 1) + '-';
+            today.getFullYear() + '-0'  + parseInt(today.getMonth() + 1) + '-';
         if (today.getDate() < 9) {
             maxDate += '0' + parseInt(today.getDate());
         }
