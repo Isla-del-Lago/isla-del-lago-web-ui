@@ -9,17 +9,10 @@ import NewBill from './Pages/NewBill';
 import NewConsumptions from './Pages/NewConsumptions';
 import ManageConsumptions from './Pages/ManageConsumptions';
 
-var urlUserBase = '';
-var urlBillBase = '';
 function App() {
-    if (document.location.origin === 'http://localhost:3000') {
-        urlUserBase = 'http://localhost:9000';
-        urlBillBase = 'http://localhost:9003';
-    } else {
-        urlUserBase = 'https://isla-del-lago-user-mngr-qa.herokuapp.com';
-        urlBillBase = 'https://isla-del-lago-bill-mngr-qa.herokuapp.com';
-    }
     const [userLoginState, setUserLoginState] = useState(false);
+    console.log(process.env.REACT_APP_USER_URL);
+    console.log(process.env.REACT_APP_BILL_URL);
     useEffect(() => {
         setUserLoginState(sessionStorage.UserLoginState);
     }, []);
@@ -41,34 +34,25 @@ function App() {
                         />
                         <Route
                             path='/register'
-                            element={<Register 
-                                userLoginState={userLoginState}
-                                urlUserBase={urlUserBase} />}
+                            element={
+                                <Register userLoginState={userLoginState} />
+                            }
                         />
                         <Route
                             path='/login'
-                            element={
-                                <Login
-                                    userLoginState={userLoginState}
-                                    urlUserBase={urlUserBase}
-                                />
-                            }
+                            element={<Login userLoginState={userLoginState} />}
                         />
                         <Route
                             path='/create-bill'
                             element={
-                                <NewBill
-                                    userLoginState={userLoginState}
-                                    urlBillBase={urlBillBase}
-                                />
+                                <NewBill userLoginState={userLoginState} />
                             }
                         />
                         <Route
                             path='/calculate-percentages'
                             element={
                                 <NewConsumptions
-                                    userLoginState={userLoginState}
-                                    urlBillBase={urlBillBase}
+                                userLoginState={userLoginState}
                                 />
                             }
                         />
@@ -77,7 +61,6 @@ function App() {
                             element={
                                 <ManageConsumptions
                                     userLoginState={userLoginState}
-                                    urlBillBase={urlBillBase}
                                 />
                             }
                         />

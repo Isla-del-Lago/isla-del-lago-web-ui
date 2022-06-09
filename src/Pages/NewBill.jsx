@@ -8,11 +8,11 @@ import MainBillInfoForm from '../Components/MainBillInfoForm';
 import SewerageInfoForm from '../Components/SewerageInfoForm';
 
 export default function NewBill(props) {
-    const { userLoginState, urlBillBase } = props;
+    const { userLoginState } = props;
     const [formConsumptionStep, setFormConsumptionStep] = useState(1);
 
-    if(!userLoginState){
-        document.location= '/'
+    if (!userLoginState) {
+        document.location = '/';
     }
 
     const formSectionCompleteHandler = () => {
@@ -22,7 +22,7 @@ export default function NewBill(props) {
         setFormConsumptionStep(formConsumptionStep - 1);
     };
     const submitHandler = () => {
-        fetch(`${urlBillBase}/api/v1/bill/create`, {
+        fetch(`${process.env.REACT_APP_BILL_URL}/api/v1/bill/create`, {
             method: 'POST',
             headers: {
                 'Content-Type': utils.headers['Content-Type'],

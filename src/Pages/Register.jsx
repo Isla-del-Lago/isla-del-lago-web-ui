@@ -10,7 +10,7 @@ import utils from '../Components/Utils.json';
 import './Styles/Resgister.css';
 
 export default function Register(props) {
-    const { userLoginState, urlUserBase } = props;
+    const { userLoginState } = props;
     const [enteredName, setEnteredName] = useState('');
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredApartment, setEnteredApartment] = useState('');
@@ -58,7 +58,7 @@ export default function Register(props) {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        fetch(`${urlUserBase}/api/v1/user/create`, {
+        fetch(`${process.env.REACT_APP_USER_URL}/api/v1/user/create`, {
             method: 'POST',
             headers: {
                 'Content-Type': utils.headers['Content-Type'],

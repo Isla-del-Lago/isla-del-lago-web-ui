@@ -7,10 +7,10 @@ import utils from '../Components/Utils.json';
 import Button from '../Components/Button';
 const apartments = utils.apartments;
 let consumptionsData = [];
-export default function NewConsumptions(props) {
-    const { userLoginState, urlBillBase } = props;
 
-    if (!userLoginState) {
+export default function NewConsumptions(props) {
+    const { userLoginState } = props;
+    if (!sessionStorage.billId) {
         document.location = '/';
     }
 
@@ -26,18 +26,21 @@ export default function NewConsumptions(props) {
                 value: parseFloat(sessionStorage.getItem(apartment)),
             });
         });
-        fetch(`${urlBillBase}/api/v1/bill/consumption/calculatePercentages`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': utils.headers['Content-Type'],
-                'X-Uuid': sessionStorage.getItem('X-uuid'),
-                Authorization: sessionStorage.getItem('Token'),
-            },
-            body: JSON.stringify({
-                billId: sessionStorage.billId,
-                consumptions: consumptionsData,
-            }),
-        })
+        fetch(
+            `${process.env.REACT_APP_BILL_URL}/api/v1/bill/consumption/calculatePercentages`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': utils.headers['Content-Type'],
+                    'X-Uuid': sessionStorage.getItem('X-uuid'),
+                    Authorization: sessionStorage.getItem('Token'),
+                },
+                body: JSON.stringify({
+                    billId: sessionStorage.billId,
+                    consumptions: consumptionsData,
+                }),
+            }
+        )
             .then((response) => response.json())
             .then((response) => {
                 consumptionsData = [];
@@ -74,7 +77,6 @@ export default function NewConsumptions(props) {
     };
     return (
         <React.Fragment>
-            
             {userLoginState && (
                 <div className='formsContainer'>
                     <Form className='customForm' onSubmit={submitHandler}>
@@ -88,7 +90,6 @@ export default function NewConsumptions(props) {
                                 key={apartment}
                                 onChange={setConsumptionValue}
                                 type='number'
-                                // placeHolder={apartment}
                                 required={true}
                             />
                         ))}
