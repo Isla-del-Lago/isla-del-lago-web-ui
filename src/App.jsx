@@ -1,7 +1,7 @@
 import './App.css';
 import Register from './Pages/Register';
 import Login from './Pages/Login';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import Home from './Pages/Home';
 import Layout from './Components/Layout';
@@ -28,57 +28,55 @@ function App() {
             }}
         >
             <div className='App'>
-                <BrowserRouter>
-                    <Layout>
-                        <Routes>
-                            <Route exact path='/' element={<Home />} />
-                            <Route
-                                path='/register'
-                                element={
-                                    userLoginState ? (
-                                        <Navigate to='/' />
-                                    ) : (
-                                        <Register />
-                                    )
-                                }
-                            />
-                            <Route
-                                path='/login'
-                                element={
-                                    userLoginState ? (
-                                        <Navigate to='/' />
-                                    ) : (
-                                        <Login onLogin={onLoginHandler} />
-                                    )
-                                }
-                            />
-                            <Route
-                                path='/create-bill'
-                                element={
-                                    !userLoginState ? (
-                                        <Navigate to='/' />
-                                    ) : (
-                                        <NewBill />
-                                    )
-                                }
-                            />
-                            <Route
-                                path='/calculate-percentages'
-                                element={<NewConsumptions />}
-                            />
-                            <Route
-                                path='/manage-consumptions'
-                                element={
-                                    !userLoginState ? (
-                                        <Navigate to='/' />
-                                    ) : (
-                                        <ManageConsumptions />
-                                    )
-                                }
-                            />
-                        </Routes>
-                    </Layout>
-                </BrowserRouter>
+                <Layout>
+                    <Routes>
+                        <Route exact path='/' element={<Home />} />
+                        <Route
+                            path='/register'
+                            element={
+                                userLoginState ? (
+                                    <Navigate to='/' />
+                                ) : (
+                                    <Register />
+                                )
+                            }
+                        />
+                        <Route
+                            path='/login'
+                            element={
+                                userLoginState ? (
+                                    <Navigate to='/' />
+                                ) : (
+                                    <Login onLogin={onLoginHandler} />
+                                )
+                            }
+                        />
+                        <Route
+                            path='/create-bill'
+                            element={
+                                !userLoginState ? (
+                                    <Navigate to='/' />
+                                ) : (
+                                    <NewBill />
+                                )
+                            }
+                        />
+                        <Route
+                            path='/calculate-percentages'
+                            element={<NewConsumptions />}
+                        />
+                        <Route
+                            path='/manage-consumptions'
+                            element={
+                                !userLoginState ? (
+                                    <Navigate to='/' />
+                                ) : (
+                                    <ManageConsumptions />
+                                )
+                            }
+                        />
+                    </Routes>
+                </Layout>
             </div>
         </AuthContext.Provider>
     );
