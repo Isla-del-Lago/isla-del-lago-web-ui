@@ -2,3 +2,7 @@
     flex-wrap: nowrap;
     align-items: center;
 }
+
+a {
+    text-decoration: none;
+}

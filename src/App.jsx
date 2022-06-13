@@ -1,73 +1,86 @@
 import './App.css';
 import Register from './Pages/Register';
 import Login from './Pages/Login';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import Home from './Pages/Home';
 import Layout from './Components/Layout';
 import NewBill from './Pages/NewBill';
 import NewConsumptions from './Pages/NewConsumptions';
 import ManageConsumptions from './Pages/ManageConsumptions';
+import AuthContext from './Components/Store/auth-context';
 
 function App() {
     const [userLoginState, setUserLoginState] = useState(false);
-    console.log(process.env.REACT_APP_USER_URL);
-    console.log(process.env.REACT_APP_BILL_URL);
-    useEffect(() => {
-        setUserLoginState(sessionStorage.UserLoginState);
-    }, []);
-    const logout = () => {
+
+    const onLoginHandler = () => {
+        setUserLoginState(true);
+    };
+    const onLogoutHandler = () => {
+        sessionStorage.clear();
         setUserLoginState(false);
-        document.location = '/';
     };
     return (
-        <div className='App'>
-            <BrowserRouter>
-                <Layout
-                    userLoginState={userLoginState}
-                    onLogoutHandler={logout}
-                >
-                    <Routes>
-                        <Route
-                            path='/'
-                            element={<Home userLoginState={userLoginState} />}
-                        />
-                        <Route
-                            path='/register'
-                            element={
-                                <Register userLoginState={userLoginState} />
-                            }
-                        />
-                        <Route
-                            path='/login'
-                            element={<Login userLoginState={userLoginState} />}
-                        />
-                        <Route
-                            path='/create-bill'
-                            element={
-                                <NewBill userLoginState={userLoginState} />
-                            }
-                        />
-                        <Route
-                            path='/calculate-percentages'
-                            element={
-                                <NewConsumptions
-                                userLoginState={userLoginState}
-                                />
-                            }
-                        />
-                        <Route
-                            path='/manage-consumptions'
-                            element={
-                                <ManageConsumptions
-                                    userLoginState={userLoginState}
-                                />
-                            }
-                        />
-                    </Routes>
-                </Layout>
-            </BrowserRouter>
-        </div>
+        <AuthContext.Provider
+            value={{
+                userLoginState: userLoginState,
+                onLogout: onLogoutHandler,
+            }}
+        >
+            <div className='App'>
+                <BrowserRouter>
+                    <Layout>
+                        <Routes>
+                            <Route exact path='/' element={<Home />} />
+                            <Route
+                                path='/register'
+                                element={
+                                    userLoginState ? (
+                                        <Navigate to='/' />
+                                    ) : (
+                                        <Register />
+                                    )
+                                }
+                            />
+                            <Route
+                                path='/login'
+                                element={
+                                    userLoginState ? (
+                                        <Navigate to='/' />
+                                    ) : (
+                                        <Login onLogin={onLoginHandler} />
+                                    )
+                                }
+                            />
+                            <Route
+                                path='/create-bill'
+                                element={
+                                    !userLoginState ? (
+                                        <Navigate to='/' />
+                                    ) : (
+                                        <NewBill />
+                                    )
+                                }
+                            />
+                            <Route
+                                path='/calculate-percentages'
+                                element={<NewConsumptions />}
+                            />
+                            <Route
+                                path='/manage-consumptions'
+                                element={
+                                    !userLoginState ? (
+                                        <Navigate to='/' />
+                                    ) : (
+                                        <ManageConsumptions />
+                                    )
+                                }
+                            />
+                        </Routes>
+                    </Layout>
+                </BrowserRouter>
+            </div>
+        </AuthContext.Provider>
     );
 }
 

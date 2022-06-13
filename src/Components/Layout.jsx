@@ -1,12 +1,17 @@
 import React from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import AuthContext from './Store/auth-context';
 import './Styles/Layout.css';
 
+import { useNavigate } from 'react-router-dom';
+
 export default function Layout(props) {
-    const { userLoginState } = props;
-    const logoutHandler = () => {
-        sessionStorage.clear();
-        props.onLogoutHandler();
+    const authCtx = useContext(AuthContext);
+    const navigate = useNavigate();
+    const onLogout = () => {
+        authCtx.onLogout()
+        navigate('/');
     };
     return (
         <React.Fragment>
@@ -15,25 +20,25 @@ export default function Layout(props) {
                 className='navbar navbar-expand-lg navbar-dark bg-dark'
             >
                 <div className='container-fluid'>
-                    <a className='navbar-brand' href='/'>
-                        Isla del lago
-                    </a>
+                    <Link to='/'>
+                        <span className='navbar-brand'>Isla del lago</span>
+                    </Link>
                 </div>
-                { !userLoginState && (
+                {!authCtx.userLoginState && (
                     <Link to='/login'>
                         <button className='customButton'>Iniciar sesión</button>
                     </Link>
                 )}
-                {!userLoginState && (
+                {!authCtx.userLoginState && (
                     <Link to='/register'>
                         <button className='customButton'>Registarse</button>
                     </Link>
                 )}
-                {userLoginState && (
-                <button className='customButton' onClick={logoutHandler}>
-                    Cerrar sesión
-                </button>
-            )}
+                {authCtx.userLoginState && (
+                    <button className='customButton' onClick={onLogout}>
+                        Cerrar sesión
+                    </button>
+                )}
             </nav>
             {props.children}
         </React.Fragment>

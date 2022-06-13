@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import './Styles/NewConsumptions.css';
+
 import Form from '../Components/Form';
 import Input from '../Components/Input';
-import utils from '../Components/Utils.json';
 import Button from '../Components/Button';
+import Loader from '../Components/Loader';
+
+import utils from '../Components/Utils.json';
+import AuthContext from '../Components/Store/auth-context';
+
 const apartments = utils.apartments;
 let consumptionsData = [];
 
 export default function NewConsumptions(props) {
-    const { userLoginState } = props;
+    const authCtx = useContext(AuthContext);
+    const navigate = useNavigate();
+    const [loaderVisibility, setLoaderVisibility] = useState('invisible');
+
+
     if (!sessionStorage.billId) {
         document.location = '/';
     }
@@ -20,6 +29,7 @@ export default function NewConsumptions(props) {
 
     const submitHandler = (event) => {
         event.preventDefault();
+        setLoaderVisibility('visible');
         apartments.forEach((apartment) => {
             consumptionsData.push({
                 apartmentId: apartment,
@@ -45,39 +55,45 @@ export default function NewConsumptions(props) {
             .then((response) => {
                 consumptionsData = [];
                 if (response.consumptionIds) {
+                    setLoaderVisibility('invisible');
                     Swal.fire({
                         text: 'Consumos agregados con exito',
                         icon: 'success',
                         confirmButtonText: 'Continuar',
                     }).then(() => {
-                        document.location = '/';
+                        navigate('/');
                     });
                 }
                 if (response.error) {
+                    setLoaderVisibility('invisible');
                     Swal.fire({
                         title: response.errorCode,
                         text: response.error,
                         icon: 'warning',
                         confirmButtonText: 'Continuar',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
                     }).then(() => {
                         consumptionsData = [];
                     });
                 }
             })
-            .catch((error) =>
+            .catch((error) => {
+                setLoaderVisibility('invisible');
                 Swal.fire({
                     title: 'Error!' + error.State,
                     text: error.error,
                     icon: 'error',
                     confirmButtonText: 'Continuar',
-                }).then(() => {
-                    consumptionsData = [];
-                })
-            );
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                });
+            });
     };
     return (
         <React.Fragment>
-            {userLoginState && (
+        <Loader visible={loaderVisibility} />
+            {authCtx.userLoginState && (
                 <div className='formsContainer'>
                     <Form className='customForm' onSubmit={submitHandler}>
                         <div className='customForm--title'>
