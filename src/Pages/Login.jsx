@@ -1,23 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+
 import Button from '../Components/Button';
 import Card from '../Components/Card';
 import Form from '../Components/Form';
 import Input from '../Components/Input';
+import Loader from '../Components/Loader';
+
 import utils from '../Components/Utils.json';
-
-
+import AuthContext from '../Components/Store/auth-context';
 
 export default function Login(props) {
-    const { userLoginState } = props;
+    const authCtx = useContext(AuthContext);
+    const navigate = useNavigate();
+    const [loaderVisibility, setLoaderVisibility] = useState('invisible');
+
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [buttonState, setButtonState] = useState('disabled');
 
-    if (userLoginState) {
-        document.location = '/';
-    }
     useEffect(() => {
         if (enteredEmail.length > 0 && enteredPassword.length > 0) {
             setButtonDisabled(false);
@@ -38,6 +41,7 @@ export default function Login(props) {
 
     const submitHandler = (event) => {
         event.preventDefault();
+        setLoaderVisibility('visible');
         fetch(`${process.env.REACT_APP_USER_URL}/api/v1/user/login`, {
             method: 'POST',
             headers: {
@@ -51,37 +55,45 @@ export default function Login(props) {
             .then((response) => response.json())
             .then((response) => {
                 if (response.uuid) {
+                    setLoaderVisibility('invisible');
                     sessionStorage.clear();
                     sessionStorage.setItem(utils.keys['X-uuid'], response.uuid);
                     sessionStorage.setItem(
                         utils.keys.Token,
                         'Bearer ' + response.token
                     );
-                    sessionStorage.setItem(utils.keys.UserLoginState, true);
-                    document.location = '/';
+                    props.onLogin();
+                    navigate('/');
                 }
                 if (response.error) {
+                    setLoaderVisibility('invisible');
                     Swal.fire({
                         title: response.errorCode,
                         text: response.error,
                         icon: 'warning',
                         confirmButtonText: 'Continuar',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
                     });
                 }
             })
-            .catch((error) =>
+            .catch((error) => {
+                setLoaderVisibility('invisible');
                 Swal.fire({
                     title: 'Error!' + error.State,
                     text: error.error,
                     icon: 'error',
                     confirmButtonText: 'Continuar',
-                })
-            );
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                });
+            });
     };
 
     return (
         <React.Fragment>
-            {!userLoginState && (
+            <Loader visible={loaderVisibility} />
+            {!authCtx.userLoginState && (
                 <Card title='Isla del lago' subtitle='Water Manager'>
                     <Form className='customForm' onSubmit={submitHandler}>
                         <div className='customForm--title'>Iniciar sesion</div>

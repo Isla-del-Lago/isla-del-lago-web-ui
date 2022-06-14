@@ -1,73 +1,84 @@
 import './App.css';
 import Register from './Pages/Register';
 import Login from './Pages/Login';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import Home from './Pages/Home';
 import Layout from './Components/Layout';
 import NewBill from './Pages/NewBill';
 import NewConsumptions from './Pages/NewConsumptions';
 import ManageConsumptions from './Pages/ManageConsumptions';
+import AuthContext from './Components/Store/auth-context';
 
 function App() {
     const [userLoginState, setUserLoginState] = useState(false);
-    console.log(process.env.REACT_APP_USER_URL);
-    console.log(process.env.REACT_APP_BILL_URL);
-    useEffect(() => {
-        setUserLoginState(sessionStorage.UserLoginState);
-    }, []);
-    const logout = () => {
+
+    const onLoginHandler = () => {
+        setUserLoginState(true);
+    };
+    const onLogoutHandler = () => {
+        sessionStorage.clear();
         setUserLoginState(false);
-        document.location = '/';
     };
     return (
-        <div className='App'>
-            <BrowserRouter>
-                <Layout
-                    userLoginState={userLoginState}
-                    onLogoutHandler={logout}
-                >
+        <AuthContext.Provider
+            value={{
+                userLoginState: userLoginState,
+                onLogout: onLogoutHandler,
+            }}
+        >
+            <div className='App'>
+                <Layout>
                     <Routes>
-                        <Route
-                            path='/'
-                            element={<Home userLoginState={userLoginState} />}
-                        />
+                        <Route exact path='/' element={<Home />} />
                         <Route
                             path='/register'
                             element={
-                                <Register userLoginState={userLoginState} />
+                                userLoginState ? (
+                                    <Navigate to='/' />
+                                ) : (
+                                    <Register />
+                                )
                             }
                         />
                         <Route
                             path='/login'
-                            element={<Login userLoginState={userLoginState} />}
+                            element={
+                                userLoginState ? (
+                                    <Navigate to='/' />
+                                ) : (
+                                    <Login onLogin={onLoginHandler} />
+                                )
+                            }
                         />
                         <Route
                             path='/create-bill'
                             element={
-                                <NewBill userLoginState={userLoginState} />
+                                !userLoginState ? (
+                                    <Navigate to='/' />
+                                ) : (
+                                    <NewBill />
+                                )
                             }
                         />
                         <Route
                             path='/calculate-percentages'
-                            element={
-                                <NewConsumptions
-                                userLoginState={userLoginState}
-                                />
-                            }
+                            element={<NewConsumptions />}
                         />
                         <Route
                             path='/manage-consumptions'
                             element={
-                                <ManageConsumptions
-                                    userLoginState={userLoginState}
-                                />
+                                !userLoginState ? (
+                                    <Navigate to='/' />
+                                ) : (
+                                    <ManageConsumptions />
+                                )
                             }
                         />
                     </Routes>
                 </Layout>
-            </BrowserRouter>
-        </div>
+            </div>
+        </AuthContext.Provider>
     );
 }
 

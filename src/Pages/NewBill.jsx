@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import utils from '../Components/Utils.json';
-import './Styles/NewBill.css';
+
 import AqueductInfoForm from '../Components/AqueductInfoForm';
 import CubicMetersInfoForm from '../Components/CubicMetersInfoForm';
 import MainBillInfoForm from '../Components/MainBillInfoForm';
 import SewerageInfoForm from '../Components/SewerageInfoForm';
+import Loader from '../Components/Loader';
+
+import utils from '../Components/Utils.json';
+import AuthContext from '../Components/Store/auth-context';
 
 export default function NewBill(props) {
-    const { userLoginState } = props;
-    const [formConsumptionStep, setFormConsumptionStep] = useState(1);
+    const authCtx = useContext(AuthContext);
+    const navigate = useNavigate();
+    const [loaderVisibility, setLoaderVisibility] = useState('invisible');
 
-    if (!userLoginState) {
-        document.location = '/';
-    }
+    const [formConsumptionStep, setFormConsumptionStep] = useState(1);
 
     const formSectionCompleteHandler = () => {
         setFormConsumptionStep(formConsumptionStep + 1);
@@ -22,6 +25,7 @@ export default function NewBill(props) {
         setFormConsumptionStep(formConsumptionStep - 1);
     };
     const submitHandler = () => {
+        setLoaderVisibility('visible');
         fetch(`${process.env.REACT_APP_BILL_URL}/api/v1/bill/create`, {
             method: 'POST',
             headers: {
@@ -63,30 +67,48 @@ export default function NewBill(props) {
             .then((response) => response.json())
             .then((response) => {
                 if (response.billId > 0) {
+                    setLoaderVisibility('invisible');
                     Swal.fire({
                         text: 'Factura agregada con exito',
                         icon: 'success',
                         confirmButtonText: 'Continuar',
                     }).then(() => {
                         sessionStorage.setItem('billId', response.billId);
-                        document.location = '/calculate-percentages';
+                        navigate('/calculate-percentages');
                     });
                 }
                 if (response.error) {
+                    setLoaderVisibility('invisible');
                     Swal.fire({
                         title: response.errorCode,
                         text: response.error,
                         icon: 'error',
                         confirmButtonText: 'Continuar',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
                     }).then(() => {
-                        document.location = '/create-bill';
+                        navigate('/');
                     });
                 }
+            })
+            .catch((error) => {
+                setLoaderVisibility('invisible');
+                Swal.fire({
+                    title: 'Error!' + error.State,
+                    text: error.error,
+                    icon: 'error',
+                    confirmButtonText: 'Continuar',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                }).then(() => {
+                    navigate('/');
+                });
             });
     };
     return (
         <React.Fragment>
-            {userLoginState && (
+            <Loader visible={loaderVisibility} />
+            {authCtx.userLoginState && (
                 <>
                     {formConsumptionStep === 1 && (
                         <MainBillInfoForm

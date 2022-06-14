@@ -2,7 +2,7 @@ import React from 'react';
 import * as ReactDOM from 'react-dom';
 import { fireEvent, getQueriesForElement } from '@testing-library/react';
 import Register from '../Register';
-
+import { BrowserRouter } from 'react-router-dom';
 
 var cardTitle;
 var cardSubtitle;
@@ -15,7 +15,12 @@ var formButton;
 
 describe('rendering components', () => {
     const root = document.createElement('div');
-    ReactDOM.render(<Register />, root);
+    ReactDOM.render(
+        <BrowserRouter>
+            <Register />
+        </BrowserRouter>,
+        root
+    );
 
     test('Rendering Register Card', () => {
         const { getByText, getByPlaceholderText } = getQueriesForElement(root);
@@ -90,7 +95,9 @@ describe('rendering components', () => {
 
         fireEvent.change(nameInput, { target: { value: 'Bruce Wayne' } });
         fireEvent.change(emailInput, { target: { value: 'bruce@wayne.com' } });
-        fireEvent.change(apartmentInput, { target: { value: 'Apartamento 201' } });
+        fireEvent.change(apartmentInput, {
+            target: { value: 'Apartamento 201' },
+        });
         fireEvent.change(passwordInput, { target: { value: 'batman' } });
         expect(formButton.className).toBe('customButton enabled');
         expect(formButton.disabled).toBe(false);

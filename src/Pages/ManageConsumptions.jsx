@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Swal from 'sweetalert2';
-import utils from '../Components/Utils.json';
+
 import Button from '../Components/Button';
 import Form from '../Components/Form';
 import DateInput from '../Components/DateInput';
 import Input from '../Components/Input';
 import ApartmentConsumptionTable from '../Components/ApartmentConsumptionTable';
-import './Styles/ManageConsumptions.css';
 import Loader from '../Components/Loader';
 
+import utils from '../Components/Utils.json';
+import AuthContext from '../Components/Store/auth-context';
+
 export default function ManageConsumptions(props) {
-    const { userLoginState } = props;
-    if (!userLoginState) {
-        document.location = '/';
-    }
+    const authCtx = useContext(AuthContext);
+    const [loaderVisibility, setLoaderVisibility] = useState('invisible');
+    const [searched, setSearched] = useState(false);
+
     const today = new Date();
     let maxDate;
     if (today.getMonth() < 9) {
@@ -40,14 +42,14 @@ export default function ManageConsumptions(props) {
 
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [buttonState, setButtonState] = useState('disabled');
-    const [searched, setSearched] = useState(false);
-    const [loaderVisibility, setLoaderVisibility] = useState('invisible');
 
     const [enteredStartDate, setEnteredStartDate] = useState('');
     const [enteredEndDate, setEnteredEndDate] = useState('');
     const [enteredApartmentId, setEnteredApartmentId] = useState('');
+
     const [currentBill, setCurrentBill] = useState({});
     const [currentConsumption, setCurrentConsumption] = useState({});
+
     const setStartDateHandler = (event) => {
         setEnteredStartDate(event.target.value);
     };
@@ -78,8 +80,8 @@ export default function ManageConsumptions(props) {
     }, [enteredStartDate, enteredEndDate, enteredApartmentId]);
 
     const submitHandler = (event) => {
-        setLoaderVisibility('visible');
         event.preventDefault();
+        setLoaderVisibility('visible');
         fetch(
             `${process.env.REACT_APP_BILL_URL}/api/v1/bill/billDate?startDate=${enteredStartDate}&endDate=${enteredEndDate}`,
             {
@@ -109,10 +111,11 @@ export default function ManageConsumptions(props) {
                         .then((response) => response.json())
                         .then((response) => {
                             setSearched(true);
-                            setLoaderVisibility('invisible');
                             setCurrentConsumption(response);
+                            setLoaderVisibility('invisible');
                             if (response.error) {
                                 setSearched(false);
+                                setLoaderVisibility('invisible');
                                 Swal.fire({
                                     title: response.errorCode,
                                     text: response.error,
@@ -123,36 +126,48 @@ export default function ManageConsumptions(props) {
                         })
                         .catch((error) => {
                             setSearched(false);
+                            setLoaderVisibility('invisible');
                             Swal.fire({
                                 title: 'Error!' + error.State,
                                 text: error.error,
                                 icon: 'error',
                                 confirmButtonText: 'Continuar',
+                                allowEscapeKey: false,
+                                allowOutsideClick: false,
                             });
                         });
                 }
                 if (response.error) {
+                    setSearched(false);
+                    setLoaderVisibility('invisible');
                     Swal.fire({
                         title: response.errorCode,
                         text: response.error,
                         icon: 'warning',
                         confirmButtonText: 'Continuar',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
                     });
                 }
             })
-            .catch((error) =>
+            .catch((error) => {
+                setSearched(false);
+                setLoaderVisibility('invisible');
                 Swal.fire({
                     title: 'Error!' + error.State,
                     text: error.error,
                     icon: 'error',
                     confirmButtonText: 'Continuar',
-                })
-            );
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                });
+            });
     };
 
     return (
         <React.Fragment>
-            {userLoginState && (
+            <Loader visible={loaderVisibility} />
+            {authCtx.userLoginState && (
                 <Form className='customForm' onSubmit={submitHandler}>
                     <div className='customForm--title'>
                         Consultar una factura
@@ -191,7 +206,6 @@ export default function ManageConsumptions(props) {
                     />
                 </Form>
             )}
-            <Loader visible={loaderVisibility} />
             {searched && (
                 <ApartmentConsumptionTable
                     residentialBasicCubicMeters={
@@ -218,26 +232,30 @@ export default function ManageConsumptions(props) {
                     residentialBasicSuperiorSewerageFee={
                         currentBill.residentialBasicSuperiorSewerage
                     }
-                    residentialFixedAqueduct={parseFloat(currentConsumption.residentialFixedAqueduct).toFixed(
+                    residentialFixedAqueduct={parseFloat(
+                        currentConsumption.residentialFixedAqueduct
+                    ).toFixed(2)}
+                    residentialBasicAqueduct={parseFloat(
+                        currentConsumption.residentialBasicAqueduct
+                    ).toFixed(2)}
+                    residentialBasicSuperiorAqueduct={parseFloat(
+                        currentConsumption.residentialBasicSuperiorAqueduct
+                    ).toFixed(2)}
+                    residentialFixedSewerage={parseFloat(
+                        currentConsumption.residentialFixedSewerage
+                    ).toFixed(2)}
+                    residentialBasicSewerage={parseFloat(
+                        currentConsumption.residentialBasicSewerage
+                    ).toFixed(2)}
+                    residentialBasicSuperiorSewerage={parseFloat(
+                        currentConsumption.residentialBasicSuperiorSewerage
+                    ).toFixed(2)}
+                    cleaning={parseFloat(currentConsumption.cleaning).toFixed(
                         2
                     )}
-                    residentialBasicAqueduct={parseFloat(currentConsumption.residentialBasicAqueduct).toFixed(
+                    discounts={parseFloat(currentConsumption.discounts).toFixed(
                         2
                     )}
-                    residentialBasicSuperiorAqueduct={parseFloat(currentConsumption.residentialBasicSuperiorAqueduct).toFixed(
-                        2
-                    )}
-                    residentialFixedSewerage={parseFloat(currentConsumption.residentialFixedSewerage).toFixed(
-                        2
-                    )}
-                    residentialBasicSewerage={parseFloat(currentConsumption.residentialBasicSewerage).toFixed(
-                        2
-                    )}
-                    residentialBasicSuperiorSewerage={parseFloat(currentConsumption.residentialBasicSuperiorSewerage).toFixed(
-                        2
-                    )}
-                    cleaning={parseFloat(currentConsumption.cleaning).toFixed(2)}
-                    discounts={parseFloat(currentConsumption.discounts).toFixed(2)}
                     total={parseFloat(currentConsumption.total).toFixed(2)}
                 />
             )}

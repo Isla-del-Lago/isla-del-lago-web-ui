@@ -1,3 +1,21 @@
+.spinerBackground {
+    overflow: hidden;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.spinner {
+    width: 10rem;
+    height: 10rem;
+}
+
+
 /* .loaderContainer {
     display: flex;
     width: 100vw;
