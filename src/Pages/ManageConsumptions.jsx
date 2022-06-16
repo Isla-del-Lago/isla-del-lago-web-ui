@@ -104,7 +104,6 @@ export default function ManageConsumptions(props) {
                     'Content-Type': utils.headers['Content-Type'],
                     'X-Uuid': sessionStorage.getItem('X-uuid'),
                     Authorization: sessionStorage.getItem('Token'),
-                    'Access-Control-Allow-Origin': '*',
                 },
             }
         )
