@@ -10,8 +10,15 @@ import Loader from '../Components/Loader';
 
 import utils from '../Components/Utils.json';
 import AuthContext from '../Components/Store/auth-context';
+import Charts from '../Components/Charts';
 
-export default function ManageConsumptions(props) {
+import './Styles/ManageConsumptions.css';
+
+let dates = [];
+let costs = [];
+let consumptions = [];
+let currentApartment = '';
+export default function ManageConsumptions() {
     const authCtx = useContext(AuthContext);
     const [loaderVisibility, setLoaderVisibility] = useState('invisible');
     const [searched, setSearched] = useState(false);
@@ -50,6 +57,10 @@ export default function ManageConsumptions(props) {
     const [currentBill, setCurrentBill] = useState({});
     const [currentConsumption, setCurrentConsumption] = useState({});
 
+    const [billDates, setBillDates] = useState([]);
+    const [billConsumptions, setBillConsumptions] = useState([]);
+    const [billCosts, setBillCosts] = useState([]);
+
     const setStartDateHandler = (event) => {
         setEnteredStartDate(event.target.value);
     };
@@ -81,6 +92,9 @@ export default function ManageConsumptions(props) {
 
     const submitHandler = (event) => {
         event.preventDefault();
+        dates = [];
+        consumptions = [];
+        costs = [];
         setLoaderVisibility('visible');
         fetch(
             `${process.env.REACT_APP_BILL_URL}/api/v1/bill/billDate?startDate=${enteredStartDate}&endDate=${enteredEndDate}`,
@@ -94,11 +108,12 @@ export default function ManageConsumptions(props) {
             }
         )
             .then((response) => response.json())
-            .then((response) => {
-                if (response.billId) {
-                    setCurrentBill(response);
+            .then((data) => {
+                if (data.billId) {
+                    setCurrentBill(data);
+                    currentApartment = enteredApartmentId;
                     fetch(
-                        `${process.env.REACT_APP_BILL_URL}/api/v1/bill/consumption/consumptionDetail/apartmentId/${enteredApartmentId}/billId/${response.billId}`,
+                        `${process.env.REACT_APP_BILL_URL}/api/v1/bill/consumption/consumptionDetail/apartmentId/${enteredApartmentId}/billId/${data.billId}`,
                         {
                             method: 'GET',
                             headers: {
@@ -109,16 +124,70 @@ export default function ManageConsumptions(props) {
                         }
                     )
                         .then((response) => response.json())
-                        .then((response) => {
+                        .then((data) => {
                             setSearched(true);
-                            setCurrentConsumption(response);
+                            setCurrentConsumption(data);
                             setLoaderVisibility('invisible');
-                            if (response.error) {
+                            if (data.error) {
                                 setSearched(false);
                                 setLoaderVisibility('invisible');
                                 Swal.fire({
-                                    title: response.errorCode,
-                                    text: response.error,
+                                    title: data.errorCode,
+                                    text: data.error,
+                                    icon: 'warning',
+                                    confirmButtonText: 'Continuar',
+                                });
+                            }
+                        })
+                        .catch((error) => {
+                            setSearched(false);
+                            setLoaderVisibility('invisible');
+                            Swal.fire({
+                                title: 'Error!' + error.State,
+                                text: error.error,
+                                icon: 'error',
+                                confirmButtonText: 'Continuar',
+                                allowEscapeKey: false,
+                                allowOutsideClick: false,
+                            });
+                        });
+                    fetch(
+                        `${process.env.REACT_APP_BILL_URL}/api/v1/bill/consumption/consumptionDetail/apartmentId/${enteredApartmentId}`,
+                        {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': utils.headers['Content-Type'],
+                                'X-Uuid': sessionStorage.getItem('X-uuid'),
+                                Authorization: sessionStorage.getItem('Token'),
+                            },
+                        }
+                    )
+                        .then((response) => response.json())
+                        .then((data) => {
+                            if (data) {
+                                Object.entries(data)
+                                    .sort()
+                                    .forEach((element) => {
+                                        dates.push(element[0]);
+                                        consumptions.push(
+                                            element[1]
+                                                .residentialBasicCubicMeters +
+                                                element[1]
+                                                    .residentialBasicSuperiorCubicMeters
+                                        );
+                                        costs.push(element[1].total);
+                                    });
+                                setBillDates(dates);
+                                setBillConsumptions(consumptions);
+                                setBillCosts(costs);
+                            }
+                            setLoaderVisibility('invisible');
+                            if (data.error) {
+                                setSearched(false);
+                                setLoaderVisibility('invisible');
+                                Swal.fire({
+                                    title: data.errorCode,
+                                    text: data.error,
                                     icon: 'warning',
                                     confirmButtonText: 'Continuar',
                                 });
@@ -137,12 +206,12 @@ export default function ManageConsumptions(props) {
                             });
                         });
                 }
-                if (response.error) {
+                if (data.error) {
                     setSearched(false);
                     setLoaderVisibility('invisible');
                     Swal.fire({
-                        title: response.errorCode,
-                        text: response.error,
+                        title: data.errorCode,
+                        text: data.error,
                         icon: 'warning',
                         confirmButtonText: 'Continuar',
                         allowEscapeKey: false,
@@ -207,57 +276,65 @@ export default function ManageConsumptions(props) {
                 </Form>
             )}
             {searched && (
-                <ApartmentConsumptionTable
-                    residentialBasicCubicMeters={
-                        currentConsumption.residentialBasicCubicMeters
-                    }
-                    residentialBasicSuperiorCubicMeters={
-                        currentConsumption.residentialBasicSuperiorCubicMeters
-                    }
-                    residentialFixedAqueductFee={
-                        currentBill.residentialFixedAqueduct
-                    }
-                    residentialBasicAqueductFee={
-                        currentBill.residentialBasicAqueduct
-                    }
-                    residentialBasicSuperiorAqueductFee={
-                        currentBill.residentialBasicSuperiorAqueduct
-                    }
-                    residentialFixedSewerageFee={
-                        currentBill.residentialFixedSewerage
-                    }
-                    residentialBasicSewerageFee={
-                        currentBill.residentialBasicSewerage
-                    }
-                    residentialBasicSuperiorSewerageFee={
-                        currentBill.residentialBasicSuperiorSewerage
-                    }
-                    residentialFixedAqueduct={parseFloat(
-                        currentConsumption.residentialFixedAqueduct
-                    ).toFixed(2)}
-                    residentialBasicAqueduct={parseFloat(
-                        currentConsumption.residentialBasicAqueduct
-                    ).toFixed(2)}
-                    residentialBasicSuperiorAqueduct={parseFloat(
-                        currentConsumption.residentialBasicSuperiorAqueduct
-                    ).toFixed(2)}
-                    residentialFixedSewerage={parseFloat(
-                        currentConsumption.residentialFixedSewerage
-                    ).toFixed(2)}
-                    residentialBasicSewerage={parseFloat(
-                        currentConsumption.residentialBasicSewerage
-                    ).toFixed(2)}
-                    residentialBasicSuperiorSewerage={parseFloat(
-                        currentConsumption.residentialBasicSuperiorSewerage
-                    ).toFixed(2)}
-                    cleaning={parseFloat(currentConsumption.cleaning).toFixed(
-                        2
-                    )}
-                    discounts={parseFloat(currentConsumption.discounts).toFixed(
-                        2
-                    )}
-                    total={parseFloat(currentConsumption.total).toFixed(2)}
-                />
+                <div className=''>
+                    <ApartmentConsumptionTable
+                        residentialBasicCubicMeters={
+                            currentConsumption.residentialBasicCubicMeters
+                        }
+                        residentialBasicSuperiorCubicMeters={
+                            currentConsumption.residentialBasicSuperiorCubicMeters
+                        }
+                        residentialFixedAqueductFee={
+                            currentBill.residentialFixedAqueduct
+                        }
+                        residentialBasicAqueductFee={
+                            currentBill.residentialBasicAqueduct
+                        }
+                        residentialBasicSuperiorAqueductFee={
+                            currentBill.residentialBasicSuperiorAqueduct
+                        }
+                        residentialFixedSewerageFee={
+                            currentBill.residentialFixedSewerage
+                        }
+                        residentialBasicSewerageFee={
+                            currentBill.residentialBasicSewerage
+                        }
+                        residentialBasicSuperiorSewerageFee={
+                            currentBill.residentialBasicSuperiorSewerage
+                        }
+                        residentialFixedAqueduct={parseFloat(
+                            currentConsumption.residentialFixedAqueduct
+                        ).toFixed(2)}
+                        residentialBasicAqueduct={parseFloat(
+                            currentConsumption.residentialBasicAqueduct
+                        ).toFixed(2)}
+                        residentialBasicSuperiorAqueduct={parseFloat(
+                            currentConsumption.residentialBasicSuperiorAqueduct
+                        ).toFixed(2)}
+                        residentialFixedSewerage={parseFloat(
+                            currentConsumption.residentialFixedSewerage
+                        ).toFixed(2)}
+                        residentialBasicSewerage={parseFloat(
+                            currentConsumption.residentialBasicSewerage
+                        ).toFixed(2)}
+                        residentialBasicSuperiorSewerage={parseFloat(
+                            currentConsumption.residentialBasicSuperiorSewerage
+                        ).toFixed(2)}
+                        cleaning={parseFloat(
+                            currentConsumption.cleaning
+                        ).toFixed(2)}
+                        discounts={parseFloat(
+                            currentConsumption.discounts
+                        ).toFixed(2)}
+                        total={parseFloat(currentConsumption.total).toFixed(2)}
+                        apartment={currentApartment}
+                    />
+                    <Charts
+                        dates={billDates}
+                        costs={billCosts}
+                        consumptions={billConsumptions}
+                    />
+                </div>
             )}
         </React.Fragment>
     );

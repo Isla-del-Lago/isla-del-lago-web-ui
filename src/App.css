@@ -18,6 +18,7 @@ body {
     -ms-overflow-style: none;
     /* IE and Edge */
     scrollbar-width: none;
+    background-color: rgb(170, 170, 255);
     /* Firefox */
 }
 
@@ -32,10 +33,6 @@ input[type='number'] {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-body {
-    background-color: rgb(100, 100, 100);
 }
 
 .App {

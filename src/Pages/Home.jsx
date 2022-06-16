@@ -1,10 +1,9 @@
-import React from 'react';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../Components/Store/auth-context';
 import './Styles/Home.css';
-export default function Home(props) {
-    const authCtx = useContext(AuthContext)
+export default function Home() {
+    const authCtx = useContext(AuthContext);
     return (
         <div className='home'>
             {!authCtx.userLoginState && (
