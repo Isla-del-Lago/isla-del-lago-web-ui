@@ -18,7 +18,7 @@ export default function ApartmentConsumptionTable(props) {
         cleaning,
         discounts,
         total,
-        apartment
+        apartment,
     } = props;
     return (
         <React.Fragment>
@@ -27,7 +27,9 @@ export default function ApartmentConsumptionTable(props) {
                     <div className='cardRow'>
                         <div className='cardHeader'>
                             <div className='cardRowBlock'>
-                                <h2 className='cardRowBlock-title'>Apartamento:</h2>
+                                <h2 className='cardRowBlock-title'>
+                                    Apartamento:
+                                </h2>
                                 <h4 className='cardRowBlock-subtitle'>
                                     {apartment}
                                 </h4>
@@ -70,7 +72,7 @@ export default function ApartmentConsumptionTable(props) {
                                 ${residentialBasicAqueduct}
                             </h2>
                             <h4 className='cardRowBlock-subtitle'>
-                                ${residentialBasicAqueductFee}
+                                Valor Unitario: ${residentialBasicAqueductFee}
                             </h4>
                         </div>
                     </div>
@@ -89,7 +91,8 @@ export default function ApartmentConsumptionTable(props) {
                                 ${residentialBasicSuperiorAqueduct}
                             </h2>
                             <h4 className='cardRowBlock-subtitle'>
-                                ${residentialBasicSuperiorAqueductFee}
+                                Valor Unitario: $
+                                {residentialBasicSuperiorAqueductFee}
                             </h4>
                         </div>
                     </div>
@@ -107,7 +110,7 @@ export default function ApartmentConsumptionTable(props) {
                                 ${residentialFixedSewerage}
                             </h2>
                             <h4 className='cardRowBlock-subtitle'>
-                                ${residentialFixedSewerageFee}
+                                Valor Unitario: ${residentialFixedSewerageFee}
                             </h4>
                         </div>
                     </div>
@@ -125,7 +128,7 @@ export default function ApartmentConsumptionTable(props) {
                                 ${residentialBasicSewerage}
                             </h2>
                             <h4 className='cardRowBlock-subtitle'>
-                                ${residentialBasicSewerageFee}
+                                Valor Unitario: ${residentialBasicSewerageFee}
                             </h4>
                         </div>
                     </div>
@@ -144,7 +147,8 @@ export default function ApartmentConsumptionTable(props) {
                                 ${residentialBasicSuperiorSewerage}
                             </h2>
                             <h4 className='cardRowBlock-subtitle'>
-                                ${residentialBasicSuperiorSewerageFee}
+                                Valor Unitario: $
+                                {residentialBasicSuperiorSewerageFee}
                             </h4>
                         </div>
                     </div>

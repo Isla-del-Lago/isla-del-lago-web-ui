@@ -11,7 +11,7 @@ import Loader from '../Components/Loader';
 import utils from '../Components/Utils.json';
 import AuthContext from '../Components/Store/auth-context';
 
-export default function Register(props) {
+export default function Register() {
     const authCtx = useContext(AuthContext);
     const navigate = useNavigate();
     const [loaderVisibility, setLoaderVisibility] = useState('invisible');

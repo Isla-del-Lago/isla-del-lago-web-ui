@@ -14,11 +14,11 @@ import Charts from '../Components/Charts';
 
 import './Styles/ManageConsumptions.css';
 
-var dates = [];
-var costs = [];
-var consumptions = [];
-var currentApartment = '';
-export default function ManageConsumptions(props) {
+let dates = [];
+let costs = [];
+let consumptions = [];
+let currentApartment = '';
+export default function ManageConsumptions() {
     const authCtx = useContext(AuthContext);
     const [loaderVisibility, setLoaderVisibility] = useState('invisible');
     const [searched, setSearched] = useState(false);
@@ -108,12 +108,12 @@ export default function ManageConsumptions(props) {
             }
         )
             .then((response) => response.json())
-            .then((response) => {
-                if (response.billId) {
-                    setCurrentBill(response);
+            .then((data) => {
+                if (data.billId) {
+                    setCurrentBill(data);
                     currentApartment = enteredApartmentId;
                     fetch(
-                        `${process.env.REACT_APP_BILL_URL}/api/v1/bill/consumption/consumptionDetail/apartmentId/${enteredApartmentId}/billId/${response.billId}`,
+                        `${process.env.REACT_APP_BILL_URL}/api/v1/bill/consumption/consumptionDetail/apartmentId/${enteredApartmentId}/billId/${data.billId}`,
                         {
                             method: 'GET',
                             headers: {
@@ -124,16 +124,16 @@ export default function ManageConsumptions(props) {
                         }
                     )
                         .then((response) => response.json())
-                        .then((response) => {
+                        .then((data) => {
                             setSearched(true);
-                            setCurrentConsumption(response);
+                            setCurrentConsumption(data);
                             setLoaderVisibility('invisible');
-                            if (response.error) {
+                            if (data.error) {
                                 setSearched(false);
                                 setLoaderVisibility('invisible');
                                 Swal.fire({
-                                    title: response.errorCode,
-                                    text: response.error,
+                                    title: data.errorCode,
+                                    text: data.error,
                                     icon: 'warning',
                                     confirmButtonText: 'Continuar',
                                 });
@@ -163,9 +163,9 @@ export default function ManageConsumptions(props) {
                         }
                     )
                         .then((response) => response.json())
-                        .then((response) => {
-                            if (response) {
-                                Object.entries(response)
+                        .then((data) => {
+                            if (data) {
+                                Object.entries(data)
                                     .sort()
                                     .forEach((element) => {
                                         dates.push(element[0]);
@@ -182,12 +182,12 @@ export default function ManageConsumptions(props) {
                                 setBillCosts(costs);
                             }
                             setLoaderVisibility('invisible');
-                            if (response.error) {
+                            if (data.error) {
                                 setSearched(false);
                                 setLoaderVisibility('invisible');
                                 Swal.fire({
-                                    title: response.errorCode,
-                                    text: response.error,
+                                    title: data.errorCode,
+                                    text: data.error,
                                     icon: 'warning',
                                     confirmButtonText: 'Continuar',
                                 });
@@ -206,12 +206,12 @@ export default function ManageConsumptions(props) {
                             });
                         });
                 }
-                if (response.error) {
+                if (data.error) {
                     setSearched(false);
                     setLoaderVisibility('invisible');
                     Swal.fire({
-                        title: response.errorCode,
-                        text: response.error,
+                        title: data.errorCode,
+                        text: data.error,
                         icon: 'warning',
                         confirmButtonText: 'Continuar',
                         allowEscapeKey: false,
@@ -331,8 +331,8 @@ export default function ManageConsumptions(props) {
                     />
                     <Charts
                         dates={billDates}
-                        costs={costs}
-                        consumptions={consumptions}
+                        costs={billCosts}
+                        consumptions={billConsumptions}
                     />
                 </div>
             )}

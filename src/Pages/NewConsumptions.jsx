@@ -13,7 +13,7 @@ import AuthContext from '../Components/Store/auth-context';
 const apartments = utils.apartments;
 let consumptionsData = [];
 
-export default function NewConsumptions(props) {
+export default function NewConsumptions() {
     const authCtx = useContext(AuthContext);
     const navigate = useNavigate();
     const [loaderVisibility, setLoaderVisibility] = useState('invisible');

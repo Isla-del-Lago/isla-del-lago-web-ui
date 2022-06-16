@@ -4,14 +4,14 @@ import { fireEvent, getQueriesForElement } from '@testing-library/react';
 import Register from '../Register';
 import { BrowserRouter } from 'react-router-dom';
 
-var cardTitle;
-var cardSubtitle;
-var formTitle;
-var nameInput;
-var apartmentInput;
-var emailInput;
-var passwordInput;
-var formButton;
+let cardTitle;
+let cardSubtitle;
+let formTitle;
+let nameInput;
+let apartmentInput;
+let emailInput;
+let passwordInput;
+let formButton;
 
 describe('rendering components', () => {
     const root = document.createElement('div');

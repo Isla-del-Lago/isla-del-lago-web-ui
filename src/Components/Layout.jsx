@@ -1,16 +1,13 @@
-import React from 'react';
-import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from './Store/auth-context';
 import './Styles/Layout.css';
-
-import { useNavigate } from 'react-router-dom';
 
 export default function Layout(props) {
     const authCtx = useContext(AuthContext);
     const navigate = useNavigate();
     const onLogout = () => {
-        authCtx.onLogout()
+        authCtx.onLogout();
         navigate('/');
     };
     return (
