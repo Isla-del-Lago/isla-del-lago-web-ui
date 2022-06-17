@@ -14,7 +14,7 @@ import AuthContext from '../Components/Store/auth-context';
 export default function Login(props) {
     const authCtx = useContext(AuthContext);
     const navigate = useNavigate();
-    const [loaderVisibility, setLoaderVisibility] = useState('invisible');
+    const [loaderVisibility, setLoaderVisibility] = useState(false);
 
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
@@ -41,7 +41,7 @@ export default function Login(props) {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        setLoaderVisibility('visible');
+        setLoaderVisibility(true);
         fetch(`${process.env.REACT_APP_USER_URL}/api/v1/user/login`, {
             method: 'POST',
             headers: {
@@ -55,7 +55,7 @@ export default function Login(props) {
             .then((response) => response.json())
             .then((response) => {
                 if (response.uuid) {
-                    setLoaderVisibility('invisible');
+                    setLoaderVisibility(false);
                     sessionStorage.clear();
                     sessionStorage.setItem(utils.keys['X-uuid'], response.uuid);
                     sessionStorage.setItem(
@@ -66,7 +66,7 @@ export default function Login(props) {
                     navigate('/');
                 }
                 if (response.error) {
-                    setLoaderVisibility('invisible');
+                    setLoaderVisibility(false);
                     Swal.fire({
                         title: response.errorCode,
                         text: response.error,
@@ -78,7 +78,7 @@ export default function Login(props) {
                 }
             })
             .catch((error) => {
-                setLoaderVisibility('invisible');
+                setLoaderVisibility(false);
                 Swal.fire({
                     title: 'Error!' + error.State,
                     text: error.error,
@@ -92,7 +92,7 @@ export default function Login(props) {
 
     return (
         <React.Fragment>
-            <Loader visible={loaderVisibility} />
+            {loaderVisibility && <Loader />}
             {!authCtx.userLoginState && (
                 <Card title='Isla del lago' subtitle='Water Manager'>
                     <Form className='customForm' onSubmit={submitHandler}>

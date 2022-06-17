@@ -14,7 +14,7 @@ import AuthContext from '../Components/Store/auth-context';
 export default function NewBill() {
     const authCtx = useContext(AuthContext);
     const navigate = useNavigate();
-    const [loaderVisibility, setLoaderVisibility] = useState('invisible');
+    const [loaderVisibility, setLoaderVisibility] = useState(false);
 
     const [formConsumptionStep, setFormConsumptionStep] = useState(1);
 
@@ -25,7 +25,7 @@ export default function NewBill() {
         setFormConsumptionStep(formConsumptionStep - 1);
     };
     const submitHandler = () => {
-        setLoaderVisibility('visible');
+        setLoaderVisibility(true);
         fetch(`${process.env.REACT_APP_BILL_URL}/api/v1/bill/create`, {
             method: 'POST',
             headers: {
@@ -67,7 +67,7 @@ export default function NewBill() {
             .then((response) => response.json())
             .then((response) => {
                 if (response.billId > 0) {
-                    setLoaderVisibility('invisible');
+                    setLoaderVisibility(false);
                     Swal.fire({
                         text: 'Factura agregada con exito',
                         icon: 'success',
@@ -78,7 +78,7 @@ export default function NewBill() {
                     });
                 }
                 if (response.error) {
-                    setLoaderVisibility('invisible');
+                    setLoaderVisibility(false);
                     Swal.fire({
                         title: response.errorCode,
                         text: response.error,
@@ -92,7 +92,7 @@ export default function NewBill() {
                 }
             })
             .catch((error) => {
-                setLoaderVisibility('invisible');
+                setLoaderVisibility(false);
                 Swal.fire({
                     title: 'Error!' + error.State,
                     text: error.error,
@@ -107,7 +107,7 @@ export default function NewBill() {
     };
     return (
         <React.Fragment>
-            <Loader visible={loaderVisibility} />
+            {loaderVisibility && <Loader />}
             {authCtx.userLoginState && (
                 <>
                     {formConsumptionStep === 1 && (

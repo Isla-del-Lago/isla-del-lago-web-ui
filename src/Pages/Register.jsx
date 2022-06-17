@@ -14,7 +14,7 @@ import AuthContext from '../Components/Store/auth-context';
 export default function Register() {
     const authCtx = useContext(AuthContext);
     const navigate = useNavigate();
-    const [loaderVisibility, setLoaderVisibility] = useState('invisible');
+    const [loaderVisibility, setLoaderVisibility] = useState(false);
 
     const [enteredName, setEnteredName] = useState('');
     const [enteredEmail, setEnteredEmail] = useState('');
@@ -59,7 +59,7 @@ export default function Register() {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        setLoaderVisibility('visible');
+        setLoaderVisibility(true);
         fetch(`${process.env.REACT_APP_USER_URL}/api/v1/user/create`, {
             method: 'POST',
             headers: {
@@ -75,7 +75,7 @@ export default function Register() {
             .then((response) => response.json())
             .then((response) => {
                 if (response.message === 'User created') {
-                    setLoaderVisibility('invisible');
+                    setLoaderVisibility(false);
                     Swal.fire({
                         title: response.message,
                         text: 'Te has registrado exitosamente',
@@ -86,7 +86,7 @@ export default function Register() {
                     });
                 }
                 if (response.message !== 'User created') {
-                    setLoaderVisibility('invisible');
+                    setLoaderVisibility(false);
                     Swal.fire({
                         title: response.errorCode,
                         text: response.error,
@@ -98,7 +98,7 @@ export default function Register() {
                 }
             })
             .catch((error) => {
-                setLoaderVisibility('invisible');
+                setLoaderVisibility(false);
                 Swal.fire({
                     title: 'Error!' + error.State,
                     text: error.error,
@@ -112,7 +112,7 @@ export default function Register() {
 
     return (
         <React.Fragment>
-            <Loader visible={loaderVisibility} />
+            {loaderVisibility && <Loader />}
             {!authCtx.userLoginState && (
                 <Card title='Isla del lago' subtitle='Water Manager'>
                     <Form className='customForm' onSubmit={submitHandler}>
