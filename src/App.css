@@ -1,3 +1,10 @@
+:root {
+    --principal-color: #577ef2;
+    --secondary-color: #577ef281;
+    --third-color: #485B77;
+    --datelabel-color: #647999;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -18,7 +25,6 @@ body {
     -ms-overflow-style: none;
     /* IE and Edge */
     scrollbar-width: none;
-    background-color: rgb(170, 170, 255);
     /* Firefox */
 }
 
@@ -37,4 +43,13 @@ input[type='number'] {
 
 .App {
     flex-wrap: wrap;
+}
+
+@media (min-width: 600px) {
+    body {
+        background-image: url('./Assets/background.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
 }

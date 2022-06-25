@@ -1,21 +1,97 @@
-.formsContainer .customForm {
-    height: 100%;
-}
-
 .customForm {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    padding: 20px;
-    width: 100%;
+    padding: 50px;
+    width: 100vw;
+    max-width: 490px;
+    height: 100vh;
     min-height: 50%;
+    justify-content: space-between;
     background-color: #fff;
     border-radius: 20px;
 }
 
+.formHeader {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-close {
+    align-self: flex-end;
+}
+
+.welcome--title,
 .customForm--title {
-    font-weight: bold;
+    color: var(--principal-color);
+    margin-top: 15px;
+    font-family: Roboto;
     font-size: 25px;
+    font-weight: 700;
+    line-height: 29px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.customForm--subtitle {
+    color: var(--third-color);
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 15px;
+    letter-spacing: 0em;
+}
+
+.formBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.principalLabel,
+.subLabel,
+.customInput {
+    font-family: Roboto;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.principalLabel {
+    font-size: 14px;
+    color: var(--third-color);
+}
+
+.subLabel {
+    margin-left: 2px;
+    font-size: 13px;
+    color: var(--datelabel-color);
+}
+
+.customInput {
+    border: none;
+    margin-left: 2px;
+    color: var(--third-color);
+    padding: 15px 10px;
+    font-size: 13px;
+    border-radius: 10px;
+}
+
+.hyperlinkContainer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.formImage {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.hyperlink {
+    font-family: Roboto;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: 0em;
+    color: #485b77;
 }
 
 .backButton {
@@ -31,6 +107,28 @@
 
 @media (min-width: 600px) {
     .customForm {
-        padding: 80px 20px;
+        padding: 20px;
+        margin: 0 auto;
+        background-color: transparent;
+    }
+    .welcome--title {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 64px;
+    }
+    .customForm--title {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .customForm--subtitle {
+        text-align: center;
+        font-size: 20px;
+    }
+    .principalLabel {
+        text-align: center;
+    }
+    .customInput {
+        font-weight: 600;
+        font-size: 20px;
     }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import './Styles/Input.css';
 
 export default function Input(props) {
-    const { label, type, placeHolder, id, required, onChange, autoFocus } =
+    const { label, type, placeHolder, id, required, onChange, autoFocus, labelType } =
         props;
 
     const onBlur = (event) => {
@@ -10,7 +10,7 @@ export default function Input(props) {
     };
     return (
         <React.Fragment>
-            <label className='inputLabel' htmlFor={id}>
+            <label className={labelType} htmlFor={id}>
                 {label}
             </label>
             <input

@@ -5,11 +5,9 @@ export default function Form(props) {
     const { onSubmit } = props;
     return (
         <React.Fragment>
-            <div className='formsContainer'>
-                <form className='customForm' onSubmit={onSubmit}>
-                    {props.children}
-                </form>
-            </div>
+            <form className='customForm' onSubmit={onSubmit}>
+                {props.children}
+            </form>
         </React.Fragment>
     );
 }

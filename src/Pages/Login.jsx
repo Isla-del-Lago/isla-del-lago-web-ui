@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
+import image1 from '../Assets/image 1.png';
+
 import Button from '../Components/Button';
-import Card from '../Components/Card';
 import Form from '../Components/Form';
 import Input from '../Components/Input';
 import Loader from '../Components/Loader';
@@ -63,7 +64,7 @@ export default function Login(props) {
                         'Bearer ' + response.token
                     );
                     props.onLogin();
-                    navigate('/');
+                    navigate('/home');
                 }
                 if (response.error) {
                     setLoaderVisibility(false);
@@ -80,7 +81,7 @@ export default function Login(props) {
             .catch((error) => {
                 setLoaderVisibility(false);
                 Swal.fire({
-                    title: 'Error!' + error.State,
+                    title: 'Error!' ,
                     text: error.error,
                     icon: 'error',
                     confirmButtonText: 'Continuar',
@@ -94,32 +95,41 @@ export default function Login(props) {
         <React.Fragment>
             {loaderVisibility && <Loader />}
             {!authCtx.userLoginState && (
-                <Card title='Isla del lago' subtitle='Water Manager'>
-                    <Form className='customForm' onSubmit={submitHandler}>
-                        <div className='customForm--title'>Iniciar sesion</div>
-                        <Input
-                            onChange={setEmailHandler}
-                            autoFocus={true}
-                            type='email'
-                            placeHolder='Escriba su correo electrónico'
-                            id='userEmail'
-                            required={true}
-                        />
-                        <Input
-                            onChange={setPasswordHandler}
-                            type='password'
-                            placeHolder='Escriba su contraseña'
-                            id='userPassword'
-                            required={true}
-                        />
-                        <Button
-                            state={buttonState}
-                            type='submit'
-                            text='Iniciar Sesion'
-                            disabled={buttonDisabled}
-                        />
-                    </Form>
-                </Card>
+                <Form className='customForm' onSubmit={submitHandler}>
+                    <div className='welcome--title'>Bienvenido</div>
+                    <div className='customForm--subtitle'>
+                        Por favor ingresa para utilizar la aplicación
+                    </div>
+                    <img className='formImage' src={image1} alt='' />
+                    <Input
+                        onChange={setEmailHandler}
+                        autoFocus={true}
+                        type='email'
+                        placeHolder='Correo electrónico'
+                        id='userEmail'
+                        required={true}
+                    />
+                    <Input
+                        onChange={setPasswordHandler}
+                        type='password'
+                        placeHolder='Contraseña'
+                        id='userPassword'
+                        required={true}
+                    />
+                    <div className='hyperlinkContainer'>
+                        <Link to='/'>
+                            <span className='hyperlink'>
+                                ¿Olvidaste tu contraseña?
+                            </span>
+                        </Link>
+                    </div>
+                    <Button
+                        state={buttonState}
+                        type='submit'
+                        text='Ingresar'
+                        disabled={buttonDisabled}
+                    />
+                </Form>
             )}
         </React.Fragment>
     );
