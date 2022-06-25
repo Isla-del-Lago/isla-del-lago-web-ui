@@ -30,27 +30,28 @@ function App() {
             <div className='App'>
                 <Layout>
                     <Routes>
-                        <Route exact path='/' element={<Home />} />
                         <Route
-                            path='/register'
+                            path='/'
                             element={
                                 userLoginState ? (
-                                    <Navigate to='/' />
-                                ) : (
-                                    <Register />
-                                )
-                            }
-                        />
-                        <Route
-                            path='/login'
-                            element={
-                                userLoginState ? (
-                                    <Navigate to='/' />
+                                    <Navigate to='/home' />
                                 ) : (
                                     <Login onLogin={onLoginHandler} />
                                 )
                             }
                         />
+
+                        <Route
+                            path='/home'
+                            element={
+                                !userLoginState ? (
+                                    <Navigate to='/login' />
+                                ) : (
+                                    <Home />
+                                )
+                            }
+                        />
+
                         <Route
                             path='/create-bill'
                             element={

@@ -147,7 +147,7 @@ export default function ManageConsumptions() {
                                 setSearched(false);
                                 setLoaderVisibility(false);
                                 Swal.fire({
-                                    title: 'Error!' + error.State,
+                                    title: 'Error!' ,
                                     text: error.error,
                                     icon: 'error',
                                     confirmButtonText: 'Continuar',
@@ -203,7 +203,7 @@ export default function ManageConsumptions() {
                                 setSearched(false);
                                 setLoaderVisibility(false);
                                 Swal.fire({
-                                    title: 'Error!' + error.State,
+                                    title: 'Error!' ,
                                     text: error.error,
                                     icon: 'error',
                                     confirmButtonText: 'Continuar',
@@ -229,7 +229,7 @@ export default function ManageConsumptions() {
                     setSearched(false);
                     setLoaderVisibility(false);
                     Swal.fire({
-                        title: 'Error!' + error.State,
+                        title: 'Error!' ,
                         text: error.error,
                         icon: 'error',
                         confirmButtonText: 'Continuar',

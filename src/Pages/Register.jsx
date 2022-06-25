@@ -100,7 +100,7 @@ export default function Register() {
             .catch((error) => {
                 setLoaderVisibility(false);
                 Swal.fire({
-                    title: 'Error!' + error.State,
+                    title: 'Error!' ,
                     text: error.error,
                     icon: 'error',
                     confirmButtonText: 'Continuar',

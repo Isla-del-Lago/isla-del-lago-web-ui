@@ -16,13 +16,13 @@ export default function NewBill() {
     const navigate = useNavigate();
     const [loaderVisibility, setLoaderVisibility] = useState(false);
 
-    const [formConsumptionStep, setFormConsumptionStep] = useState(1);
+    const [formBillStep, setFormBillStep] = useState(1);
 
     const formSectionCompleteHandler = () => {
-        setFormConsumptionStep(formConsumptionStep + 1);
+        setFormBillStep(formBillStep + 1);
     };
     const onBackButtonHandler = () => {
-        setFormConsumptionStep(formConsumptionStep - 1);
+        setFormBillStep(formBillStep - 1);
     };
     const submitHandler = () => {
         setLoaderVisibility(true);
@@ -94,7 +94,7 @@ export default function NewBill() {
             .catch((error) => {
                 setLoaderVisibility(false);
                 Swal.fire({
-                    title: 'Error!' + error.State,
+                    title: 'Error!' ,
                     text: error.error,
                     icon: 'error',
                     confirmButtonText: 'Continuar',
@@ -110,25 +110,25 @@ export default function NewBill() {
             {loaderVisibility && <Loader />}
             {authCtx.userLoginState && (
                 <>
-                    {formConsumptionStep === 1 && (
+                    {formBillStep === 1 && (
                         <MainBillInfoForm
                             onFormComplete={formSectionCompleteHandler}
                             onBackButton={onBackButtonHandler}
                         />
                     )}
-                    {formConsumptionStep === 2 && (
+                    {formBillStep === 2 && (
                         <CubicMetersInfoForm
                             onFormComplete={formSectionCompleteHandler}
                             onBackButton={onBackButtonHandler}
                         />
                     )}
-                    {formConsumptionStep === 3 && (
+                    {formBillStep === 3 && (
                         <AqueductInfoForm
                             onFormComplete={formSectionCompleteHandler}
                             onBackButton={onBackButtonHandler}
                         />
                     )}
-                    {formConsumptionStep === 4 && (
+                    {formBillStep === 4 && (
                         <SewerageInfoForm
                             onFormComplete={submitHandler}
                             onBackButton={onBackButtonHandler}

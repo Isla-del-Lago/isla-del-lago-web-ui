@@ -12,7 +12,7 @@ export default function Layout(props) {
     };
     return (
         <React.Fragment>
-            <nav
+            {/* <nav
                 id='navbar'
                 className='navbar navbar-expand-lg navbar-dark bg-dark'
             >
@@ -36,7 +36,7 @@ export default function Layout(props) {
                         Cerrar sesión
                     </button>
                 )}
-            </nav>
+            </nav> */}
             {props.children}
         </React.Fragment>
     );

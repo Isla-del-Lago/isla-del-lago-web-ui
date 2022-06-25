@@ -14,7 +14,7 @@ export default function Home() {
                 </div>
             )}
             {authCtx.userLoginState && (
-                <div className='buttonsContainer'>
+                <div className=''>
                     <Link to='/create-bill'>
                         <button className='customButton'>Nueva factura</button>
                     </Link>

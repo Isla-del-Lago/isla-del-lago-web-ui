@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Button from '../Components/Button';
 import Form from '../Components/Form';
 import Input from '../Components/Input';
+import { CloseButton } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+
 export default function SewerageInfoForm(props) {
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [buttonState, setButtonState] = useState('disabled');
@@ -9,6 +12,8 @@ export default function SewerageInfoForm(props) {
     const [alc_fijo_rsd, setalc_fijo_rsd] = useState('');
     const [alc_rsd_bsc, setalc_rsd_bsc] = useState('');
     const [alc_rsd_bsc_sup, setalc_rsd_bsc_sup] = useState('');
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (
@@ -45,41 +50,56 @@ export default function SewerageInfoForm(props) {
         sessionStorage.setItem('alc_rsd_bsc_sup', alc_rsd_bsc_sup);
         props.onFormComplete();
     };
+    const closeFormHandler = () => {
+        navigate('/home');
+    };
     const backButton = () => {
-        props.onBackButton()
+        props.onBackButton();
     };
     return (
         <Form className='customForm' onSubmit={submitHandler}>
-            <span className='backButton' onClick={backButton}>
-            </span>
-            <div className='customForm--title'>Alcantarillado $</div>
-            <Input
-                onChange={setalc_fijo_rsdHandler}
-                type='number'
-                placeHolder='Cargo fijo residencial'
-                id='alc_fijo_rsdHandler'
-                required={true}
-            />
-            <Input
-                onChange={setalc_rsd_bscHandler}
-                type='number'
-                placeHolder='Consumo residencial básico'
-                id='alc_rsd_bscHandler'
-                required={true}
-            />
-            <Input
-                onChange={setalc_rsd_bsc_supHandler}
-                type='number'
-                placeHolder='Consumo residencial superior a básico'
-                id='alc_rsd_bsc_supHandler'
-                required={true}
-            />
-            <Button
-                state={buttonState}
-                type='submit'
-                text='Continuar'
-                disabled={buttonDisabled}
-            />
+            <div className='formHeader'>
+                <CloseButton onClick={closeFormHandler} />
+                <div className='customForm--title'>
+                    Informacion de la factura
+                </div>
+            </div>
+            <div className='formBody'>
+                <div className='principalLabel'>Alcantarillado ($)</div>
+                <Input
+                    onChange={setalc_fijo_rsdHandler}
+                    type='number'
+                    label='Cargo fijo residencial'
+                    labelType='subLabel'
+                    id='alc_fijo_rsdHandler'
+                    required={true}
+                />
+                <Input
+                    onChange={setalc_rsd_bscHandler}
+                    type='number'
+                    label='Consumo residencial básico'
+                    labelType='subLabel'
+                    id='alc_rsd_bscHandler'
+                    required={true}
+                />
+                <Input
+                    onChange={setalc_rsd_bsc_supHandler}
+                    type='number'
+                    label='Consumo residencial superior a básico'
+                    labelType='subLabel'
+                    id='alc_rsd_bsc_supHandler'
+                    required={true}
+                />
+            </div>
+            <div className='buttonsContainer'>
+                <Button type='reset' text='Regresar' onClick={backButton} />
+                <Button
+                    state={buttonState}
+                    type='submit'
+                    text='Guardar'
+                    disabled={buttonDisabled}
+                />
+            </div>
         </Form>
     );
 }
